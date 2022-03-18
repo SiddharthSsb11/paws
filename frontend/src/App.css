@@ -1,0 +1,7 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./assets/bg5.png);
+  background-position: center;
+  background-size: cover;
+}
