@@ -22,10 +22,13 @@ import gal14 from "./img/gal14.jpg";
 //import gal18 from "./img/gal18.jpg";
 //import gal19 from "./img/gal19.jpg";
 //import gal20 from "./img/gal20.jpg";
-
+import { useNavigate } from "react-router-dom";
 import "./GalleryPage.css";
 
 const GalleryPage = () => {
+
+  const navigate = useNavigate();
+
   return (
     <Box d="flex" margin="2rem auto" flexDir="column" gap="1rem" width="85%" >
       <Box
@@ -54,7 +57,7 @@ const GalleryPage = () => {
             colorScheme="yellow"
             //width="100%"
             //style={{ marginTop: "15px" }}
-            onClick={() => console.log("go back")}
+            onClick={() => navigate("/")}
             //isLoading={loading}
             //disabled={user}
             fontSize="xl"

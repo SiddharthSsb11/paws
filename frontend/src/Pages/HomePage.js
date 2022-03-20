@@ -14,16 +14,23 @@ import {
   Square,
 } from "@chakra-ui/react";
 import { FaPaw } from "react-icons/fa";
-import {BiBone} from "react-icons/bi"
+import { BiBone } from "react-icons/bi";
 import { Image } from "@chakra-ui/react";
 import CoverImage from "./img.png";
-
+import { useNavigate } from "react-router-dom";
 
 //import classes from "./HomePage.module.css";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
-    <Box margin="2rem auto" d="flex" flexDir="column" gap="1rem" color="white" 
+    <Box
+      margin="2rem auto"
+      d="flex"
+      flexDir="column"
+      gap="1rem"
+      color="white"
       //width="60%"
     >
       <Box
@@ -55,13 +62,13 @@ const HomePage = () => {
           <Icon as={FaPaw} w={12} h={12} />
           <Heading fontFamily="Bevan">P A W S </Heading>
         </Box>
-        <Box d="flex" alignItems="center" gap="0.5em" fontFamily="Suez One" >
+        <Box d="flex" alignItems="center" gap="0.5em" fontFamily="Suez One">
           <Button
             fontWeight="bold"
             colorScheme="yellow"
             width="100%"
             //style={{ marginTop: "15px" }}
-            onClick={() => console.log("clicked--3")}
+            onClick={() => navigate("/gallery")}
             //isLoading={loading}
             //disabled={user}
             fontSize="lg"
@@ -133,7 +140,7 @@ const HomePage = () => {
                 Get Started
               </Text>
             </Box>
-            
+
             <Box
               as={Button}
               bg="white"
@@ -150,13 +157,12 @@ const HomePage = () => {
                 borderRadius="7px"
                 mr={3}
               >
-                <Icon  as={BiBone} />
+                <Icon as={BiBone} />
               </Square>
               <Text color="black" fontSize="xl" fontFamily="Suez One">
                 Login
               </Text>
             </Box>
-
           </Box>
         </Box>
 
