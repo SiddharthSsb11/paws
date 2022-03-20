@@ -18,11 +18,14 @@ import {BiBone} from "react-icons/bi"
 import { Image } from "@chakra-ui/react";
 import CoverImage from "./img.png";
 
+
 //import classes from "./HomePage.module.css";
 
 const HomePage = () => {
   return (
-    <Box margin="2rem auto" d="flex" flexDir="column" gap="1rem" color="white">
+    <Box margin="2rem auto" d="flex" flexDir="column" gap="1rem" color="white" 
+      //width="60%"
+    >
       <Box
         //className={classes.grad}
         d="flex"
@@ -34,7 +37,7 @@ const HomePage = () => {
         borderRadius="7px"
         border="1.5px solid black"
         boxShadow="5px 5px 5px black"
-        bg="#44337A"
+        bg="purple.900"
       >
         <Box
           d="flex"
@@ -46,7 +49,7 @@ const HomePage = () => {
           px={4}
           color="yellow.400"
           borderRadius="7px"
-          _hover={{ transform: "scale(1.02)" }}
+          _hover={{ transform: "scale(1.04)" }}
           cursor="pointer"
         >
           <Icon as={FaPaw} w={12} h={12} />
@@ -82,7 +85,7 @@ const HomePage = () => {
       </Box>
 
       <Box
-        bg="#44337A"
+        bg="purple.900"
         //px={5}
         p={5}
         borderRadius="7px"

@@ -1,21 +1,179 @@
 import React from "react";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, Image, Button } from "@chakra-ui/react";
+import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+
+import gal1 from "./img/gal1.jpg";
+import gal2 from "./img/gal2.jpg";
+import gal3 from "./img/gal3.jpg";
+import gal4 from "./img/gal4.jpg";
+import gal5 from "./img/gal5.jpg";
+import gal6 from "./img/gal6.jpg";
+import gal7 from "./img/gal7.jpg";
+import gal8 from "./img/gal8.jpg";
+import gal9 from "./img/gal9.jpg";
+import gal10 from "./img/gal10.jpg";
+import gal11 from "./img/gal11.jpg";
+import gal12 from "./img/gal12.jpg";
+import gal13 from "./img/gal13.jpg";
+import gal14 from "./img/gal14.jpg";
+//import gal15 from "./img/gal15.jpg";
+//import gal16 from "./img/gal16.jpg";
+//import gal17 from "./img/gal17.jpg";
+//import gal18 from "./img/gal18.jpg";
+//import gal19 from "./img/gal19.jpg";
+//import gal20 from "./img/gal20.jpg";
+
+import "./GalleryPage.css";
+
 const GalleryPage = () => {
   return (
-    <Box d="flex" margin="2rem auto" flexDir="column" gap="1rem">
+    <Box d="flex" margin="2rem auto" flexDir="column" gap="1rem" width="85%" >
       <Box
-        bg="gray.100"
-        color="black"
+        bg="purple.900"
+        //color="black"
         fontFamily="Suez One"
-        py={1.5}
-        px={4}
+        //py={1.5}
+        d="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        p={5}
         borderRadius="7px"
+        border="1.5px solid black"
+        boxShadow="5px 5px 5px black"
+        _hover={{ backgroundColor: "purple.900" }}
       >
-        <Text fontSize="3xl" color="black"> Meet local pets 🐩 and pet lovers 🐈‍⬛ for <br /> friendship, play-dates 🦴 or fun outdoor playing 🐾. </Text>
+        <Text fontSize="3xl" color="white" textAlign="left">
+          {" "}
+          Meet local pets 🐕 and pet lovers 🐈‍ for <br /> friendship,
+          play-dates 🦴 or fun outdoor playing 🦦.{" "}
+        </Text>{" "}
+        <Box d="flex" flexDir="column" gap="0.5rem" alignItems="center">
+          <Button
+            leftIcon={<ArrowBackIcon />}
+            fontWeight="bold"
+            colorScheme="yellow"
+            //width="100%"
+            //style={{ marginTop: "15px" }}
+            onClick={() => console.log("go back")}
+            //isLoading={loading}
+            //disabled={user}
+            fontSize="xl"
+          >
+            Go Back
+          </Button>
+          <Button
+            rightIcon={<ArrowForwardIcon />}
+            fontWeight="bold"
+            colorScheme="yellow"
+            //width="100%"
+            //style={{ marginTop: "15px" }}
+            onClick={() => console.log("go ahead")}
+            //isLoading={loading}
+            //disabled={user}
+            fontSize="xl"
+          >
+            Dive In
+          </Button>
+        </Box>
       </Box>
-      <section>
-      
-      </section>
+      <Box boxShadow="5px 5px 5px black">
+        <section className="gallery">
+          <figure className="gallery__item gallery__item--1 ">
+            <Image src={gal1} alt="gallery img 1" className="gallery__img" />
+          </figure>
+          <figure className="gallery__item gallery__item--2 ">
+            <Image
+              src={gal2}
+              alt="gallery img 2"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--3 ">
+            <Image
+              src={gal3}
+              alt="gallery img 3"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--4 ">
+            <Image
+              src={gal4}
+              alt="gallery img 4"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--5 ">
+            <Image
+              src={gal5}
+              alt="gallery img 5"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--6 ">
+            <Image
+              src={gal6}
+              alt="gallery img 6"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--7 ">
+            <Image
+              src={gal7}
+              alt="gallery img 7"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--8 ">
+            <Image
+              src={gal8}
+              alt="gallery img 8"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--9 ">
+            <Image
+              src={gal9}
+              alt="gallery img 9"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--10 ">
+            <Image
+              src={gal10}
+              alt="gallery img 10"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--11 ">
+            <Image
+              src={gal11}
+              alt="gallery img 11"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--12 ">
+            <Image
+              src={gal12}
+              alt="gallery img 12"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--13 ">
+            <Image
+              src={gal13}
+              alt="gallery img 13"
+              className="gallery__img"
+            />
+          </figure>
+          <figure className="gallery__item gallery__item--14 ">
+            <Image
+              src={gal14}
+              alt="gallery img 14"
+              className="gallery__img"
+            />
+          </figure>
+        </section>
+      </Box>
     </Box>
   );
 };
