@@ -12,6 +12,14 @@ import {
   Badge,
   Button,
   Square,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FaPaw } from "react-icons/fa";
 import { BiBone } from "react-icons/bi";
@@ -19,10 +27,13 @@ import { Image } from "@chakra-ui/react";
 import CoverImage from "./img.png";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+
 //import classes from "./HomePage.module.css";
 
 const HomePage = () => {
+
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <div className="home">
@@ -122,7 +133,7 @@ const HomePage = () => {
               <Box
                 as={Button}
                 bg="white"
-                onClick={() => console.log("get started")}
+                onClick={onOpen}
                 p={2.5}
                 size="lg"
                 _hover={{ backgroundColor: "yellow.400" }}
@@ -176,6 +187,11 @@ const HomePage = () => {
           />
         </Box>
       </Box>
+
+
+      <Modal size="lg" onClose={onClose} isOpen={isOpen}>
+            
+      </Modal>
     </div>
   );
 };
