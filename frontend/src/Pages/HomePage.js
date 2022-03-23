@@ -1,13 +1,8 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   Heading,
   Text,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
   Icon,
   Badge,
   Button,
@@ -16,24 +11,42 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/layout";
+//import { Button } from "@chakra-ui/button";
+//import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { InputGroup, InputRightElement } from "@chakra-ui/input";
 import { FaPaw } from "react-icons/fa";
+import { MdSwipe } from "react-icons/md";
 import { BiBone } from "react-icons/bi";
 import { Image } from "@chakra-ui/react";
 import CoverImage from "./img.png";
 import { useNavigate } from "react-router-dom";
+import {GiDogBowl, GiDogHouse} from "react-icons/gi";
 import "./HomePage.css";
 
 //import classes from "./HomePage.module.css";
 
 const HomePage = () => {
+  const [overlay, setOverlay] = useState("");
+  const [show, setShow] = useState(false);
+
+  const initialRef = useRef();
+  //const finalRef = useRef();
+  const OverlayOne = () => (
+    <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(5px)" />
+  );
 
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleClick = () => setShow(!show);
 
   return (
     <div className="home">
@@ -133,7 +146,10 @@ const HomePage = () => {
               <Box
                 as={Button}
                 bg="white"
-                onClick={onOpen}
+                onClick={() => {
+                  setOverlay(<OverlayOne />);
+                  onOpen();
+                }}
                 p={2.5}
                 size="lg"
                 _hover={{ backgroundColor: "yellow.400" }}
@@ -188,9 +204,142 @@ const HomePage = () => {
         </Box>
       </Box>
 
+      <Modal
+        onClose={onClose}
+        isOpen={isOpen}
+        //isCentered
+        size="md"
+        //border="1.5px solid black"
+        //bg="purple.900"
+        initialFocusRef={initialRef}
+      >
+        {overlay}
+        <ModalContent
+          border="1.5px solid black"
+          bg="purple.900"
+          color="white"
+          fontFamily="Suez One"
+          p={1}
+        >
+          <ModalHeader fontSize="4xl">
+            Login & Start
+            <span>
+              <Icon ml={4} color="yellow.400" as={MdSwipe} />
+            </span>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <VStack spacing="1.2rem">
+              <FormControl id="email" isRequired>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  //ref={initialRef}
+                  //variant="filled"
+                  type="email"
+                  focusBorderColor="yellow.400"
+                  placeholder="Enter Your Email Address"
+                  errorBorderColor="red.300"
+                />
+              </FormControl>
 
-      <Modal size="lg" onClose={onClose} isOpen={isOpen}>
-            
+              <FormControl id="password" isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup size="md">
+                  <Input
+                    type={show ? "text" : "password"}
+                    //variant="filled"
+                    focusBorderColor="yellow.400"
+                    placeholder="Enter password"
+                    errorBorderColor="red.300"
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      colorScheme="yellow"
+                      h="1.75rem"
+                      size="sm"
+                      onClick={handleClick}
+                    >
+                      {show ? "Hide" : "Show"}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+
+              <Box d="flex" alignItems="center" justifyContent="space-between" w="100%">
+                <Box w="45%"
+                  as={Button}
+                  bg="white"
+                  onClick={() => console.log("login")}
+                  p={2.5}
+                  size="lg"
+                  _hover={{ backgroundColor: "yellow.400" }}
+                >
+                  <Square
+                    color="black"
+                    bg="red.500"
+                    fontSize="2xl"
+                    p={1}
+                    borderRadius="7px"
+                    mr={3}
+                  >
+                    <Icon as={GiDogBowl} />
+                  </Square>
+                  <Text color="black" fontSize="xl" fontFamily="Suez One">
+                    Login
+                  </Text>
+                </Box>
+
+                <Box w="45%"
+                  as={Button}
+                  bg="white"
+                  onClick={() => console.log("login")}
+                  p={2.5}
+                  size="lg"
+                  _hover={{ backgroundColor: "yellow.400" }}
+                >
+                  <Square
+                    color="black"
+                    bg="red.500"
+                    fontSize="2xl"
+                    p={1}
+                    borderRadius="7px"
+                    mr={3}
+                  >
+                    <Icon as={BiBone} />
+                  </Square>
+                  <Text color="black" fontSize="xl" fontFamily="Suez One">
+                  Guest
+                  </Text>
+                </Box>
+              </Box>
+
+              <Box
+                as={Button}
+                bg="white"
+                onClick={() => console.log("signup")}
+                p={2.5}
+                size="lg"
+                _hover={{ backgroundColor: "yellow.400" }}
+              >
+                <Square
+                  color="black"
+                  bg="red.500"
+                  fontSize="2xl"
+                  p={1}
+                  borderRadius="7px"
+                  mr={3}
+                >
+                  <Icon as={GiDogHouse} />
+                </Square>
+                <Text color="black" fontSize="xl" fontFamily="Suez One" >
+                  New to the Club&nbsp; ? &nbsp;Register &nbsp;&#10132;
+	
+                </Text>
+              </Box>
+
+            </VStack>
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </div>
   );
