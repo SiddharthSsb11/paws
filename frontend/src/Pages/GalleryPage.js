@@ -1,7 +1,17 @@
-import React from "react";
-import { Box, Heading, Text, Image, Button } from "@chakra-ui/react";
+import React, { useState} from "react";
+import {
+  Box,
+  Heading,
+  Text,
+  Image,
+  Button,
+  Icon,
+  Square,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-
+import {} from "@chakra-ui/react";
 import gal1 from "./img/gal1.jpg";
 import gal2 from "./img/gal2.jpg";
 import gal3 from "./img/gal3.jpg";
@@ -23,161 +33,144 @@ import gal14 from "./img/gal14.jpg";
 //import gal19 from "./img/gal19.jpg";
 //import gal20 from "./img/gal20.jpg";
 import { useNavigate } from "react-router-dom";
+import AuthModal from "../components/AuthModal";
 import "./GalleryPage.css";
 
 const GalleryPage = () => {
 
+  const [overlay, setOverlay] = useState("");
+
+  const OverlayOne = () => (
+    <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(5px)" />
+  );
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
   return (
-    <Box d="flex" margin="2rem auto" flexDir="column" gap="1rem" width="85%" >
-      <Box
-        bg="purple.900"
-        //color="black"
-        fontFamily="Suez One"
-        //py={1.5}
-        d="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        p={5}
-        borderRadius="7px"
-        border="1.5px solid black"
-        boxShadow="5px 5px 5px black"
-        _hover={{ backgroundColor: "purple.900" }}
-      >
-        <Text fontSize="3xl" color="white" textAlign="left">
-          {" "}
-          Meet local pets 🐕 and pet lovers 🐈‍ for <br /> friendship,
-          play-dates 🦴 or fun outdoor playing 🦦.{" "}
-        </Text>{" "}
-        <Box d="flex" flexDir="column" gap="0.5rem" alignItems="center">
-          <Button
-            leftIcon={<ArrowBackIcon />}
-            fontWeight="bold"
-            colorScheme="yellow"
-            //width="100%"
-            //style={{ marginTop: "15px" }}
-            onClick={() => navigate("/")}
-            //isLoading={loading}
-            //disabled={user}
-            fontSize="xl"
-          >
-            Go Back
-          </Button>
-          <Button
-            rightIcon={<ArrowForwardIcon />}
-            fontWeight="bold"
-            colorScheme="yellow"
-            //width="100%"
-            //style={{ marginTop: "15px" }}
-            onClick={() => console.log("go ahead")}
-            //isLoading={loading}
-            //disabled={user}
-            fontSize="xl"
-          >
-            Dive In
-          </Button>
+    <div className="back">
+      <Box d="flex" margin="2rem auto" flexDir="column" gap="1rem" width="85%">
+        <Box
+          bg="purple.900"
+          //color="black"
+          fontFamily="Suez One"
+          //py={1.5}
+          d="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          p={5}
+          borderRadius="7px"
+          border="1.5px solid black"
+          boxShadow="5px 5px 5px black"
+          _hover={{ backgroundColor: "purple.900" }}
+        >
+          <Text fontSize="3xl" color="white" textAlign="left">
+            {" "}
+            Meet local pets 🐕 and pet lovers 🐈‍ for <br /> friendship,
+            play-dates 🦴 or fun outdoor playing 🦦.{" "}
+          </Text>{" "}
+          <Box d="flex" flexDir="column" gap="0.5rem" alignItems="center">
+            <Button
+              leftIcon={<ArrowBackIcon />}
+              fontWeight="bold"
+              colorScheme="yellow"
+              //width="100%"
+              //style={{ marginTop: "15px" }}
+              onClick={() => navigate("/")}
+              //isLoading={loading}
+              //disabled={user}
+              fontSize="xl"
+            >
+              Go Back
+            </Button>
+            <AuthModal overlay={overlay}>
+              <Button
+                rightIcon={<ArrowForwardIcon />}
+                fontWeight="bold"
+                colorScheme="yellow"
+                //width="100%"
+                //style={{ marginTop: "15px" }}
+                onClick={() => {
+                  setOverlay(<OverlayOne />);
+                  onOpen();
+                }}
+                //isLoading={loading}
+                //disabled={user}
+                fontSize="xl"
+              >
+                Dive In
+              </Button>
+            </AuthModal>
+          </Box>
+        </Box>
+        <Box boxShadow="5px 5px 5px black">
+          <section className="gallery">
+            <figure className="gallery__item gallery__item--1 ">
+              <Image src={gal1} alt="gallery img 1" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--2 ">
+              <Image src={gal2} alt="gallery img 2" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--3 ">
+              <Image src={gal3} alt="gallery img 3" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--4 ">
+              <Image src={gal4} alt="gallery img 4" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--5 ">
+              <Image src={gal5} alt="gallery img 5" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--6 ">
+              <Image src={gal6} alt="gallery img 6" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--7 ">
+              <Image src={gal7} alt="gallery img 7" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--8 ">
+              <Image src={gal8} alt="gallery img 8" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--9 ">
+              <Image src={gal9} alt="gallery img 9" className="gallery__img" />
+            </figure>
+            <figure className="gallery__item gallery__item--10 ">
+              <Image
+                src={gal10}
+                alt="gallery img 10"
+                className="gallery__img"
+              />
+            </figure>
+            <figure className="gallery__item gallery__item--11 ">
+              <Image
+                src={gal11}
+                alt="gallery img 11"
+                className="gallery__img"
+              />
+            </figure>
+            <figure className="gallery__item gallery__item--12 ">
+              <Image
+                src={gal12}
+                alt="gallery img 12"
+                className="gallery__img"
+              />
+            </figure>
+            <figure className="gallery__item gallery__item--13 ">
+              <Image
+                src={gal13}
+                alt="gallery img 13"
+                className="gallery__img"
+              />
+            </figure>
+            <figure className="gallery__item gallery__item--14 ">
+              <Image
+                src={gal14}
+                alt="gallery img 14"
+                className="gallery__img"
+              />
+            </figure>
+          </section>
         </Box>
       </Box>
-      <Box boxShadow="5px 5px 5px black">
-        <section className="gallery">
-          <figure className="gallery__item gallery__item--1 ">
-            <Image src={gal1} alt="gallery img 1" className="gallery__img" />
-          </figure>
-          <figure className="gallery__item gallery__item--2 ">
-            <Image
-              src={gal2}
-              alt="gallery img 2"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--3 ">
-            <Image
-              src={gal3}
-              alt="gallery img 3"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--4 ">
-            <Image
-              src={gal4}
-              alt="gallery img 4"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--5 ">
-            <Image
-              src={gal5}
-              alt="gallery img 5"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--6 ">
-            <Image
-              src={gal6}
-              alt="gallery img 6"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--7 ">
-            <Image
-              src={gal7}
-              alt="gallery img 7"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--8 ">
-            <Image
-              src={gal8}
-              alt="gallery img 8"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--9 ">
-            <Image
-              src={gal9}
-              alt="gallery img 9"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--10 ">
-            <Image
-              src={gal10}
-              alt="gallery img 10"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--11 ">
-            <Image
-              src={gal11}
-              alt="gallery img 11"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--12 ">
-            <Image
-              src={gal12}
-              alt="gallery img 12"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--13 ">
-            <Image
-              src={gal13}
-              alt="gallery img 13"
-              className="gallery__img"
-            />
-          </figure>
-          <figure className="gallery__item gallery__item--14 ">
-            <Image
-              src={gal14}
-              alt="gallery img 14"
-              className="gallery__img"
-            />
-          </figure>
-        </section>
-      </Box>
-    </Box>
+    </div>
   );
 };
 
