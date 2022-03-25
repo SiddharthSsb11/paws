@@ -14,30 +14,48 @@ import {
   FormControl,
   FormLabel,
   Input,
+
 } from "@chakra-ui/react";
 import { VStack } from "@chakra-ui/layout";
-//import { Button } from "@chakra-ui/button";
-//import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { InputGroup, InputRightElement } from "@chakra-ui/input";
 import { MdSwipe } from "react-icons/md";
 import { BiBone } from "react-icons/bi";
-//import CoverImage from "./img.png";
-//import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/toast";
+import { useNavigate } from "react-router-dom";
 import { GiDogBowl, GiDogHouse } from "react-icons/gi";
 
 const AuthModal = ({ children, overlay }) => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
 
   const initialRef = useRef();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
+  const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleClick = () => setShow(!show);
 
+  const submitHandler = async () => {
+    setLoading(true);
+
+    if (!email || !password) {
+      toast({
+        title: "Something went wrong.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
+    }
+  };
+
   return (
     <React.Fragment>
-    
       {children && <span onClick={onOpen}>{children}</span>}
 
       <Modal
@@ -57,36 +75,41 @@ const AuthModal = ({ children, overlay }) => {
           fontFamily="Suez One"
           p={2.5}
         >
-          <ModalHeader fontSize="4xl">
+          <ModalHeader fontSize="4xl" borderBottom="2px solid white">
             Login & Start
             <span>
               <Icon ml={4} color="yellow.400" as={MdSwipe} />
             </span>
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
+          <ModalBody pb={5} mt={3.5}>
             <VStack spacing="1.2rem">
               <FormControl id="email" isRequired>
-                <FormLabel>Email</FormLabel>
+                <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
+                  id="email" 
                   ref={initialRef}
                   //variant="filled"
                   type="email"
                   focusBorderColor="yellow.400"
                   placeholder="Enter Your Email Address"
-                  errorBorderColor="red.300"
+                  errorBorderColor="red.400"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </FormControl>
 
               <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
+                <FormLabel htmlFor="password">Password</FormLabel>
                 <InputGroup size="md">
-                  <Input
+                  <Input id="password"
                     type={show ? "text" : "password"}
                     //variant="filled"
                     focusBorderColor="yellow.400"
                     placeholder="Enter password"
-                    errorBorderColor="red.300"
+                    errorBorderColor="red.400"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <InputRightElement width="4.5rem">
                     <Button
@@ -101,6 +124,19 @@ const AuthModal = ({ children, overlay }) => {
                 </InputGroup>
               </FormControl>
 
+              {/* <FormControl id="checkbox" isRequired>
+                <Checkbox
+                  colorScheme="yellow"
+                  textAlign="left"
+                  onChange={() => console.log("checked")}
+                  size="md"
+                >
+                  <Text fontSize="xs" fontFamily="Suez One" color="gray.300">
+                    To proceed further, check the box to agree our terms and policies.
+                  </Text>
+                </Checkbox>
+              </FormControl> */}
+
               <Box
                 d="flex"
                 alignItems="center"
@@ -111,7 +147,7 @@ const AuthModal = ({ children, overlay }) => {
                   w="45%"
                   as={Button}
                   bg="white"
-                  onClick={() => console.log("login")}
+                  onClick={submitHandler}
                   p={2.5}
                   size="lg"
                   //mt={2}
@@ -136,7 +172,10 @@ const AuthModal = ({ children, overlay }) => {
                   w="45%"
                   as={Button}
                   bg="white"
-                  onClick={() => console.log("login")}
+                  onClick={() => {
+                    setEmail("guest@test.com");
+                    setPassword("guesttest");
+                  }}
                   p={2.5}
                   size="lg"
                   _hover={{ backgroundColor: "yellow.400" }}
@@ -161,7 +200,7 @@ const AuthModal = ({ children, overlay }) => {
                 as={Button}
                 bg="white"
                 w="100%"
-                onClick={() => console.log("signup")}
+                onClick={() => navigate("/onboarding")}
                 p={2.5}
                 size="lg"
                 _hover={{ backgroundColor: "yellow.400" }}
