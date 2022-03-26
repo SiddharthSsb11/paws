@@ -11,11 +11,14 @@ import {
   Textarea,
   Radio,
   RadioGroup,
+  Checkbox,
+  Image,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaPaw } from "react-icons/fa";
 import "./OnBoardingPage.css";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { MdSwipe } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { VStack, HStack } from "@chakra-ui/layout";
 import { InputGroup, InputRightElement } from "@chakra-ui/input";
@@ -23,33 +26,37 @@ import { useToast } from "@chakra-ui/toast";
 
 const OnBoardingPage = () => {
   const [show, setShow] = useState(false);
-
+  const [genderShow, setGenderShow] = useState(true);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
+  const [confirmpassword, setConfirmpassword] = useState();
   const [loading, setLoading] = useState(false);
-  const [textAreaValue, setTextAreaValue] = useState("");
-  const [speciesValue, setSpeciesValue] = useState('');
+  const [about, setAbout] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [speciesValue, setSpeciesValue] = useState("cat");
+  const [speciesShowValue, setSpeciesShowValue] = useState("cats");
+  const [genderValue, setGenderValue] = useState("female");
 
-  console.log(speciesValue);
+  //console.log(imageUrl);
 
+  //console.log(speciesValue);
+  //console.log(speciesShowValue);
+  //console.log(genderValue);
+  console.log(about)
   const navigate = useNavigate();
   const toast = useToast();
 
   const handleClick = () => setShow(!show);
-
-  let handleTextareaChange = (e) => {
-    let inputValue = e.target.value;
-    setTextAreaValue(inputValue);
-  };
+  const handleGenderShow = () => setGenderShow(!genderShow);
+  //console.log(genderShow);
 
   const submitHandler = async () => {
     setLoading(true);
 
     console.log("signup button clicked");
 
-    if (!name || !email || !password /* || !confirmpassword */) {
+    if (!name || !email || !password || !confirmpassword) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -73,6 +80,8 @@ const OnBoardingPage = () => {
     }
 
     console.log(name, email, "on Signup name email");
+
+    navigate("/dashboard");
   };
 
   return (
@@ -80,10 +89,10 @@ const OnBoardingPage = () => {
       <Box
         d="flex"
         flexDir="column"
-        width="75%"
+        width="95%"
         //bg="white"
         gap="1em"
-        margin="0.8rem auto"
+        margin="1.4em auto"
         px={1}
       >
         <Box
@@ -91,7 +100,7 @@ const OnBoardingPage = () => {
           alignItems="center"
           justifyContent="space-between"
           //gap="4em"
-          px={5}
+          px={6}
           py={2.5}
           borderRadius="7px"
           border="1.5px solid black"
@@ -101,19 +110,19 @@ const OnBoardingPage = () => {
           <Box
             d="flex"
             alignItems="center"
-            gap="0.8em"
+            gap="1em"
             textAlign="left"
             bg="red.600"
-            py={1}
-            px={2.5}
+            py={1.5}
+            px={3}
             color="yellow.400"
             borderRadius="7px"
             _hover={{ transform: "scale(1.02)" }}
             cursor="pointer"
             onClick={() => navigate("/")}
           >
-            <Icon as={FaPaw} w={8} h={8} />
-            <Heading fontFamily="Bevan" fontSize="3xl">
+            <Icon as={FaPaw} w={10} h={10} />
+            <Heading fontFamily="Bevan" fontSize="4xl">
               P A W S{" "}
             </Heading>
           </Box>
@@ -122,7 +131,7 @@ const OnBoardingPage = () => {
             fontFamily="bungee"
             variant="solid"
             colorScheme="gray"
-            fontSize="2xl"
+            fontSize="3xl"
             px={2.5}
             borderRadius="7px"
             _hover={{ background: "gray.600" }}
@@ -132,34 +141,35 @@ const OnBoardingPage = () => {
           {/* <Text fontSize="3xl" fontFamily="Suez One"> Create Account </Text> */}
 
           <Button
-            leftIcon={<ArrowBackIcon />}
+            rightIcon={<MdSwipe />}
             //fontWeight="bold"
             colorScheme="yellow"
             //width="100%"
-            onClick={() => navigate("/")}
+            onClick={submitHandler}
             fontFamily="Suez One"
-            fontSize="xl"
+            fontSize="3xl"
+            //disabled={false}
           >
-            Go Back
+            Submit & Start
           </Button>
         </Box>
 
         <Box
           d="flex"
           fontFamily="Suez One"
-          justifyContent="space-around"
+          justifyContent="space-between"
           alignItems="center"
-          px={2}
-          py={3}
+          px={6}
+          py={4}
           borderRadius="7px"
           border="1.5px solid black"
           boxShadow="5px 5px 5px black"
           bg="purple.900"
           color="white"
         >
-          <VStack spacing="1.4em" width="40%">
+          <VStack spacing="1.7em" width="27%">
             <FormControl id="firstName" isRequired>
-              <FormLabel fontSize="xl" htmlFor="firstName">
+              <FormLabel fontSize="xl" htmlFor="firstName" color="yellow.300">
                 Name
               </FormLabel>
               <Input
@@ -174,7 +184,9 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="email" isRequired>
-              <FormLabel fontSize="xl">Email Address</FormLabel>
+              <FormLabel fontSize="xl" color="yellow.300">
+                Email Address
+              </FormLabel>
               <Input
                 id="email"
                 name="email"
@@ -188,7 +200,9 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="password" isRequired>
-              <FormLabel fontSize="xl">Password</FormLabel>
+              <FormLabel fontSize="xl" color="yellow.300">
+                Password
+              </FormLabel>
               <InputGroup size="md">
                 <Input
                   id="paswword"
@@ -214,8 +228,10 @@ const OnBoardingPage = () => {
               </InputGroup>
             </FormControl>
 
-            {/* <FormControl id="password" isRequired>
-              <FormLabel fontSize="lg">Confirm Password</FormLabel>
+            <FormControl id="password" isRequired>
+              <FormLabel fontSize="lg" color="yellow.300">
+                Confirm Password
+              </FormLabel>
               <InputGroup size="md">
                 <Input
                   id="paswword"
@@ -238,10 +254,12 @@ const OnBoardingPage = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-            </FormControl> */}
+            </FormControl>
 
             <FormControl id="dob" isRequired>
-              <FormLabel fontSize="xl">🎂 Birthday</FormLabel>
+              <FormLabel fontSize="xl" color="yellow.300">
+                🎂 Birthday
+              </FormLabel>
               <HStack spacing={4}>
                 <Input
                   htmlSize="xs"
@@ -250,7 +268,7 @@ const OnBoardingPage = () => {
                   id="dob_day"
                   name="dob_day"
                   type="number"
-                  onChange={console.log("day")}
+                  onChange={() => console.log("day")}
                   focusBorderColor="yellow.400"
                   errorBorderColor="red.300"
                 />
@@ -261,7 +279,7 @@ const OnBoardingPage = () => {
                   id="dob_month"
                   name="dob_month"
                   type="number"
-                  onChange={console.log("month")}
+                  onChange={() => console.log("month")}
                   focusBorderColor="yellow.400"
                   errorBorderColor="red.300"
                 />
@@ -272,39 +290,181 @@ const OnBoardingPage = () => {
                   placeholder="YYYY"
                   name="dob_year"
                   type="number"
-                  onChange={() =>console.log("year")}
+                  onChange={() => console.log("year")}
                   focusBorderColor="yellow.400"
                   errorBorderColor="red.300"
                 />
               </HStack>
             </FormControl>
+          </VStack>
 
+          <VStack spacing="1.8em" width="32%" mt={2} alignSelf="start">
             <FormControl as="fieldset" isRequired>
-              <FormLabel fontSize="xl">I am a :</FormLabel>
-              <RadioGroup onChange={setSpeciesValue} value={speciesValue}>
+              <FormLabel fontSize="2xl" color="yellow.300">
+                I am a{" "}
+              </FormLabel>
+              <RadioGroup
+                onChange={setSpeciesValue}
+                value={speciesValue}
+                defaultValue="cat"
+              >
                 <HStack spacing="1.2rem">
-                  <Radio value="Cat" colorScheme="yellow" size="lg" id="cat" name="cat">
+                  <Radio
+                    value="cat"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="cat"
+                    name="cat"
+                  >
                     Cat 😻
                   </Radio>
-                  <Radio value="Dog" colorScheme="yellow" size="lg" id="dog" name="dog">
+                  <Radio
+                    value="dog"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="dog"
+                    name="dog"
+                  >
                     Dog 🐶
                   </Radio>
                 </HStack>
               </RadioGroup>
             </FormControl>
-          </VStack>
 
-          <VStack spacing="1em" width="40%">
-            <FormControl id="text" isRequired>
-              <FormLabel fontSize="xl">About Me</FormLabel>
+            <FormControl as="fieldset" isRequired>
+              <FormLabel fontSize="2xl" color="yellow.300">
+                Show Me{" "}
+              </FormLabel>
+              <RadioGroup
+                defaultValue="cats"
+                onChange={setSpeciesShowValue}
+                value={speciesShowValue}
+              >
+                <HStack spacing="1.2rem">
+                  <Radio
+                    value="cats"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="cats"
+                    name="cats"
+                  >
+                    Cats 😻
+                  </Radio>
+                  <Radio
+                    value="dogs"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="dogs"
+                    name="dogs"
+                  >
+                    Dogs 🐶
+                  </Radio>
+                  <Radio
+                    value="everyone"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="everyone"
+                    name="everyone"
+                  >
+                    Everyone 🐾
+                  </Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl as="fieldset" isRequired>
+              <FormLabel fontSize="2xl" color="yellow.300">
+                Gender
+              </FormLabel>
+              <RadioGroup
+                onChange={setGenderValue}
+                value={genderValue}
+                defaultValue="female"
+              >
+                <HStack spacing="1.2rem">
+                  <Radio
+                    value="female"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="female"
+                    name="female"
+                  >
+                    Female &nbsp;♀️
+                  </Radio>
+                  <Radio
+                    value="male"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="male"
+                    name="male"
+                  >
+                    Male &nbsp;♂️
+                  </Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+
+            <Checkbox
+              alignSelf="start"
+              size="md"
+              colorScheme="yellow"
+              onChange={handleGenderShow}
+              defaultChecked
+            >
+              Show Gender on my profile.
+            </Checkbox>
+
+            <FormControl id="about" isRequired>
+              <FormLabel fontSize="2xl" htmlFor="about" color="yellow.300">
+                About Me
+              </FormLabel>
               <Textarea
-                value={textAreaValue}
-                onChange={handleTextareaChange}
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
                 placeholder="I like to stare at my reflection..."
                 size="sm"
+                id="about"
+                name="about"
                 focusBorderColor="yellow.400"
+                errorBorderColor="red.300"
               />
             </FormControl>
+          </VStack>
+
+          <VStack spacing="0.4em" width="33%" mt={2} alignSelf="start">
+            <FormControl id="url" isRequired>
+              <FormLabel fontSize="xl" htmlFor="url" color="yellow.300">
+                Profile Picture
+              </FormLabel>
+              <Input
+                id="url"
+                type="url"
+                placeholder="Enter URL profile picture..."
+                onChange={(e) => setImageUrl(e.target.value)}
+                name="url"
+                focusBorderColor="yellow.400"
+                errorBorderColor="red.300"
+              />
+            </FormControl>
+
+            {imageUrl ? (
+              <Image
+                boxSize="400px"
+                src={imageUrl}
+                //src="https://bit.ly/dan-abramov"
+                alt="profile-picture-preview"
+                width="100%"
+                //height="100%"
+                //objectFit="contain"
+                borderRadius="7px"
+                objectFit="cover"
+                //border="1px solid black"
+              />
+            ): (
+              <Text fontSize="xs" color="gray.200" fontFamily="Roboto Slab" >
+                **To see a preview of your profile picture, please enter a valid URL of your choice. 
+              </Text>
+              )}
           </VStack>
         </Box>
       </Box>
