@@ -27,32 +27,47 @@ import { useToast } from "@chakra-ui/toast";
 const OnBoardingPage = () => {
   const [show, setShow] = useState(false);
   const [genderShow, setGenderShow] = useState(true);
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
   const [loading, setLoading] = useState(false);
   const [about, setAbout] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [speciesValue, setSpeciesValue] = useState("cat");
-  const [speciesShowValue, setSpeciesShowValue] = useState("cats");
-  const [genderValue, setGenderValue] = useState("female");
+  const [species, setSpecies] = useState("cat");
+  const [speciesInterest, setSpeciesInterest] = useState("cats");
+  const [gender, setGender] = useState("female");
+  const [matches, setMatches] = useState([]);
 
-  //console.log(imageUrl);
+/*   const [formData, setFormData] = useState({
+    name: name,
+    email: email,
+    showGender: genderShow,
+    about: about,
+    dobDay: day,
+    dobMonth: month,
+    dobYear: year,
+    gender: gender,
+    species: species,
+    genderInterest: speciesInterest,
+    url: imageUrl,
+    matches: matches
+  }) */
 
-  //console.log(speciesValue);
-  //console.log(speciesShowValue);
-  //console.log(genderValue);
-  console.log(about)
+
+  console.log(day, month, year, matches, name, "day month year matches");
+  
   const navigate = useNavigate();
   const toast = useToast();
 
   const handleClick = () => setShow(!show);
   const handleGenderShow = () => setGenderShow(!genderShow);
-  //console.log(genderShow);
 
   const submitHandler = async () => {
-    setLoading(true);
+    /* setLoading(true);
 
     console.log("signup button clicked");
 
@@ -79,7 +94,7 @@ const OnBoardingPage = () => {
       return;
     }
 
-    console.log(name, email, "on Signup name email");
+    console.log(name, email, "on Signup name email"); */
 
     navigate("/dashboard");
   };
@@ -268,7 +283,7 @@ const OnBoardingPage = () => {
                   id="dob_day"
                   name="dob_day"
                   type="number"
-                  onChange={() => console.log("day")}
+                  onChange={(e) => setDay(e.target.value)}
                   focusBorderColor="yellow.400"
                   errorBorderColor="red.300"
                 />
@@ -279,7 +294,7 @@ const OnBoardingPage = () => {
                   id="dob_month"
                   name="dob_month"
                   type="number"
-                  onChange={() => console.log("month")}
+                  onChange={(e) => setMonth(e.target.value)}
                   focusBorderColor="yellow.400"
                   errorBorderColor="red.300"
                 />
@@ -290,7 +305,7 @@ const OnBoardingPage = () => {
                   placeholder="YYYY"
                   name="dob_year"
                   type="number"
-                  onChange={() => console.log("year")}
+                  onChange={(e) => setYear(e.target.value)}
                   focusBorderColor="yellow.400"
                   errorBorderColor="red.300"
                 />
@@ -304,8 +319,8 @@ const OnBoardingPage = () => {
                 I am a{" "}
               </FormLabel>
               <RadioGroup
-                onChange={setSpeciesValue}
-                value={speciesValue}
+                onChange={setSpecies}
+                value={species}
                 defaultValue="cat"
               >
                 <HStack spacing="1.2rem">
@@ -333,12 +348,44 @@ const OnBoardingPage = () => {
 
             <FormControl as="fieldset" isRequired>
               <FormLabel fontSize="2xl" color="yellow.300">
+                Gender
+              </FormLabel>
+              <RadioGroup
+                onChange={setGender}
+                value={gender}
+                defaultValue="female"
+              >
+                <HStack spacing="1.2rem">
+                  <Radio
+                    value="female"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="female"
+                    name="female"
+                  >
+                    Female &nbsp;♀️
+                  </Radio>
+                  <Radio
+                    value="male"
+                    colorScheme="yellow"
+                    size="lg"
+                    id="male"
+                    name="male"
+                  >
+                    Male &nbsp;♂️
+                  </Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl as="fieldset" isRequired>
+              <FormLabel fontSize="2xl" color="yellow.300">
                 Show Me{" "}
               </FormLabel>
               <RadioGroup
                 defaultValue="cats"
-                onChange={setSpeciesShowValue}
-                value={speciesShowValue}
+                onChange={setSpeciesInterest}
+                value={speciesInterest}
               >
                 <HStack spacing="1.2rem">
                   <Radio
@@ -372,38 +419,6 @@ const OnBoardingPage = () => {
               </RadioGroup>
             </FormControl>
 
-            <FormControl as="fieldset" isRequired>
-              <FormLabel fontSize="2xl" color="yellow.300">
-                Gender
-              </FormLabel>
-              <RadioGroup
-                onChange={setGenderValue}
-                value={genderValue}
-                defaultValue="female"
-              >
-                <HStack spacing="1.2rem">
-                  <Radio
-                    value="female"
-                    colorScheme="yellow"
-                    size="lg"
-                    id="female"
-                    name="female"
-                  >
-                    Female &nbsp;♀️
-                  </Radio>
-                  <Radio
-                    value="male"
-                    colorScheme="yellow"
-                    size="lg"
-                    id="male"
-                    name="male"
-                  >
-                    Male &nbsp;♂️
-                  </Radio>
-                </HStack>
-              </RadioGroup>
-            </FormControl>
-
             <Checkbox
               alignSelf="start"
               size="md"
@@ -418,11 +433,11 @@ const OnBoardingPage = () => {
               <FormLabel fontSize="2xl" htmlFor="about" color="yellow.300">
                 About Me
               </FormLabel>
-              <Textarea
+              <Textarea fontFamily="Roboto Slab"
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
                 placeholder="I like to stare at my reflection..."
-                size="sm"
+                size="md"
                 id="about"
                 name="about"
                 focusBorderColor="yellow.400"
@@ -436,20 +451,21 @@ const OnBoardingPage = () => {
               <FormLabel fontSize="xl" htmlFor="url" color="yellow.300">
                 Profile Picture
               </FormLabel>
-              <Input
+              <Input fontFamily="Roboto Slab"
                 id="url"
                 type="url"
-                placeholder="Enter URL profile picture..."
+                placeholder="Enter URL for profile picture..."
                 onChange={(e) => setImageUrl(e.target.value)}
                 name="url"
                 focusBorderColor="yellow.400"
                 errorBorderColor="red.300"
+                size="sm"
               />
             </FormControl>
 
             {imageUrl ? (
               <Image
-                boxSize="400px"
+                boxSize="410px"
                 src={imageUrl}
                 //src="https://bit.ly/dan-abramov"
                 alt="profile-picture-preview"

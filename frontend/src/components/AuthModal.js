@@ -83,13 +83,13 @@ const AuthModal = ({ children, overlay }) => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={5} mt={3.5}>
-            <VStack spacing="1.2rem">
+            <VStack spacing="1.5rem">
               <FormControl id="email" isRequired>
-                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormLabel fontSize="xl" color="yellow.300" htmlFor="email">Email</FormLabel>
                 <Input
                   id="email" 
                   ref={initialRef}
-                  //variant="filled"
+                  name="email"
                   type="email"
                   focusBorderColor="yellow.400"
                   placeholder="Enter Your Email Address"
@@ -100,11 +100,11 @@ const AuthModal = ({ children, overlay }) => {
               </FormControl>
 
               <FormControl id="password" isRequired>
-                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormLabel htmlFor="password" fontSize="xl" color="yellow.300">Password</FormLabel>
                 <InputGroup size="md">
                   <Input id="password"
                     type={show ? "text" : "password"}
-                    //variant="filled"
+                    name="password"
                     focusBorderColor="yellow.400"
                     placeholder="Enter password"
                     errorBorderColor="red.400"
