@@ -1,9 +1,70 @@
-import React from 'react'
+import { Box } from "@chakra-ui/react";
+import React, { useState } from "react";
+import "./DashboardPage.css";
+import TinderCard from "react-tinder-card";
+
+const characters = [
+  {
+    name: "Richard Hendricks",
+    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
+  },
+  {
+    name: "Erlich Bachman",
+    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
+  },
+  {
+    name: "Monica Hall",
+    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
+  },
+  {
+    name: "Jared Dunn",
+    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
+  },
+  {
+    name: "Dinesh Chugtai",
+    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
+  },
+];
 
 const DashboardPage = () => {
-  return (
-    <div><h2 style={{textAlign: 'center', color: 'white'}}>DashboardPage</h2></div>
-  )
-}
+  const [lastDirection, setLastDirection] = useState();
 
-export default DashboardPage
+  const swiped = (direction, nameToDelete) => {
+    console.log("removing: " + nameToDelete);
+    setLastDirection(direction);
+  };
+
+  const outOfFrame = (name) => {
+    console.log(name + " left the screen!");
+  };
+  return (
+    <div className="back">
+      <Box margin="auto">
+        <div className="cardContainer">
+          {characters.map((character) => (
+            <TinderCard
+              className="swipe"
+              key={character.name}
+              onSwipe={(dir) => swiped(dir, character.name)}
+              onCardLeftScreen={() => outOfFrame(character.name)}
+            >
+              <div
+                style={{ backgroundImage: "url(" + character.url + ")" }}
+                className="card"
+              >
+                <h3>{character.name}</h3>
+              </div>
+            </TinderCard>
+          ))}
+        </div>
+        {lastDirection ? (
+          <h2 className="infoText">You swiped {lastDirection}</h2>
+        ) : (
+          <h2 className="infoText" />
+        )}
+      </Box>
+    </div>
+  );
+};
+
+export default DashboardPage;
