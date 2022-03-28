@@ -1,5 +1,4 @@
 .back {
-
     min-height: 100vh;
     display: flex;
     background-image: linear-gradient(rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.40)), url(./back.png);
@@ -34,7 +33,6 @@
     height: 100%;
 }
 
-.swipe:last-of-type {}
 
 .card h3 {
     position: absolute;
