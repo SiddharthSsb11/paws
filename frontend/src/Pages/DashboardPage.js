@@ -11,7 +11,9 @@ const DashboardPage = () => {
 
   return (
     <div className="back">
-      <Box margin="auto" d="flex" >
+      <Box  d="flex" alignItems="center" width="100%" bg="blue" margin="1.5rem auto" justifyContent="space-between"
+        px={2} py={1}
+      >
         <MatchContainer />
         <SwipeContainer/>
         <ChatContainer/>
