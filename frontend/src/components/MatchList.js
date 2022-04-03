@@ -41,14 +41,7 @@ const matches = [
     matchedDate: "5 March 2022",
     age: "3",
   },
-  {
-    id: 5,
-    name: "Kayla",
-    imageUrl:
-      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
-    matchedDate: "5 March 2022",
-    age: "3",
-  },
+  
 ];
 
 const MatchList = () => {

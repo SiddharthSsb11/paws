@@ -182,12 +182,12 @@ const OnBoardingPage = () => {
           bg="purple.900"
           color="white"
         >
-          <VStack spacing="1.7em" width="27%">
+          <VStack spacing="1.7em" width="25%" alignSelf="start">
             <FormControl id="firstName" isRequired>
-              <FormLabel fontSize="xl" htmlFor="firstName" color="yellow.300">
+              <FormLabel fontSize="2xl" htmlFor="firstName" color="yellow.300">
                 Name
               </FormLabel>
-              <Input
+              <Input fontFamily="roboto slab"
                 id="firstName"
                 type="text"
                 placeholder="Enter Your Name"
@@ -199,10 +199,10 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="email" isRequired>
-              <FormLabel fontSize="xl" color="yellow.300">
+              <FormLabel fontSize="2xl" color="yellow.300">
                 Email Address
               </FormLabel>
-              <Input
+              <Input fontFamily="roboto slab"
                 id="email"
                 name="email"
                 type="email"
@@ -215,11 +215,11 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="password" isRequired>
-              <FormLabel fontSize="xl" color="yellow.300">
+              <FormLabel fontSize="2xl" color="yellow.300">
                 Password
               </FormLabel>
               <InputGroup size="md">
-                <Input
+                <Input fontFamily="roboto slab"
                   id="paswword"
                   name="password"
                   type={show ? "text" : "password"}
@@ -244,11 +244,11 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="password" isRequired>
-              <FormLabel fontSize="lg" color="yellow.300">
+              <FormLabel fontSize="2xl" color="yellow.300">
                 Confirm Password
               </FormLabel>
               <InputGroup size="md">
-                <Input
+                <Input fontFamily="roboto slab"
                   id="paswword"
                   name="password"
                   type={show ? "text" : "password"}
@@ -271,12 +271,12 @@ const OnBoardingPage = () => {
               </InputGroup>
             </FormControl>
 
-            <FormControl id="dob" isRequired>
-              <FormLabel fontSize="xl" color="yellow.300">
+            <FormControl id="dob" isRequired fontFamily="roboto slab">
+              <FormLabel fontSize="2xl" color="yellow.300" fontFamily="Suez One">
                 🎂 Birthday
               </FormLabel>
               <HStack spacing={4}>
-                <Input
+                <Input 
                   htmlSize="xs"
                   width="auto"
                   placeholder="DD"
@@ -313,7 +313,7 @@ const OnBoardingPage = () => {
             </FormControl>
           </VStack>
 
-          <VStack spacing="1.8em" width="32%" mt={2} alignSelf="start">
+          <VStack spacing="1.8em" width="30%" /* mt={2} */ alignSelf="start">
             <FormControl as="fieldset" isRequired>
               <FormLabel fontSize="2xl" color="yellow.300">
                 I am a{" "}
@@ -446,7 +446,7 @@ const OnBoardingPage = () => {
             </FormControl>
           </VStack>
 
-          <VStack spacing="0.4em" width="33%" mt={2} alignSelf="start">
+          <VStack spacing="0.4em" width="35%" /* mt={2} */ alignSelf="start">
             <FormControl id="url" isRequired>
               <FormLabel fontSize="xl" htmlFor="url" color="yellow.300">
                 Profile Picture
@@ -465,7 +465,7 @@ const OnBoardingPage = () => {
 
             {imageUrl ? (
               <Image
-                boxSize="410px"
+                boxSize="460px"
                 src={imageUrl}
                 //src="https://bit.ly/dan-abramov"
                 alt="profile-picture-preview"

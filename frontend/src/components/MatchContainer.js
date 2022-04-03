@@ -17,7 +17,7 @@ const MatchContainer = () => {
       gap="1em"
       bg="purple.900"
       height="42rem"
-      width="22.5%"
+      width="23%"
       //color="white"
       borderRadius="7px"
       border="1.5px solid black"
@@ -30,7 +30,7 @@ const MatchContainer = () => {
         alignItems="center"
         width="100%"
         height="16%"
-        bg="yellow.500"
+        bg="yellow.400"
         borderRadius="5px"
 
       >
