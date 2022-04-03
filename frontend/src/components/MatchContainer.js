@@ -1,8 +1,8 @@
 import { SettingsIcon } from "@chakra-ui/icons";
 import { Avatar, Badge, Box, IconButton, Text } from "@chakra-ui/react";
 import React from "react";
-import { MdSettings } from "react-icons/md";
-import {RiLogoutCircleFill} from "react-icons/ri"
+import { MdSettings, } from "react-icons/md";
+import {IoLogOut} from "react-icons/io5"
 import { useNavigate } from "react-router-dom";
 import MatchList from "./MatchList"
 
@@ -14,7 +14,7 @@ const MatchContainer = () => {
     <Box
       d="flex"
       flexDir="column"
-      gap="0.6em"
+      gap="1em"
       bg="purple.900"
       height="42rem"
       width="22.5%"
@@ -48,7 +48,7 @@ const MatchContainer = () => {
             w={20}
             name="Dog"
             src="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-            //border="1px solid black"
+            border="1px solid black"
           />
 
           <Box
@@ -56,7 +56,7 @@ const MatchContainer = () => {
             flexDir="column"
             alignItems="start"
             justifyContent="space-between"
-            gap="0.5rem"
+            gap="0.6rem"
             textAlign="left"
           >
             <Badge
@@ -69,6 +69,7 @@ const MatchContainer = () => {
               borderRadius="7px"
               letterSpacing="1.75px"
               _hover={{ background: "red.600", color:"white"  }}
+              //_hover={{ background: "black", color:"red.600"  }}
             >
               Goofie
             </Badge>
@@ -86,7 +87,7 @@ const MatchContainer = () => {
           </Box>
         </Box>
 
-        <Box d="flex" flexDir="column" gap="0.1rem" alignItems="center" px={2}>
+        <Box d="flex" flexDir="column" gap="0.2rem" alignItems="center" px={2}>
           <IconButton
             variant="ghost"
             //bg="gray.700"
@@ -103,13 +104,14 @@ const MatchContainer = () => {
           <IconButton
             variant="ghost"
             //bg="gray.700"
-            color="gray.780"
+            color="gray.800"
             size="sm"
             textAlign="center"
             fontSize="2xl"
+            fontWeight="bold"
             _hover={{ backgroundColor: "black", color: "red.600" }}
             aria-label="Logout"
-            icon={<RiLogoutCircleFill />}
+            icon={<IoLogOut />}
             onClick={() => navigate("/")}
           />
 
@@ -117,14 +119,19 @@ const MatchContainer = () => {
         </Box>
       </Box>
 
-      <Box d="flex" flexDir="column" alignItems="center" gap="1.2em" >
+      <Box d="flex" flexDir="column" alignItems="center" gap="1.2rem" >
         <Badge variant="outline" colorScheme="yellow" fontSize="xl" fontFamily="bungee" px={1.5}
           letterSpacing="1.25px"
         >
         Matches
         </Badge>
 
-        <Box width="95%" bg="yellow.300"><MatchList/></Box>
+        <Box 
+          width="100%" 
+          //bg="yellow.300"
+        >
+          <MatchList/>
+        </Box>
       </Box>
     </Box>
   );
