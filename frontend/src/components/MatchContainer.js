@@ -17,7 +17,7 @@ const MatchContainer = () => {
       gap="1em"
       bg="purple.900"
       height="42rem"
-      width="23%"
+      width="24%"
       //color="white"
       borderRadius="7px"
       border="1.5px solid black"
@@ -94,7 +94,7 @@ const MatchContainer = () => {
             color="gray.800"
             size="sm"
             textAlign="center"
-            fontSize="2xl"
+            fontSize="3xl"
             _hover={{ backgroundColor: "black", color: "red.600" }}
             aria-label="Settings"
             icon={<MdSettings />}
@@ -107,7 +107,7 @@ const MatchContainer = () => {
             color="gray.800"
             size="sm"
             textAlign="center"
-            fontSize="2xl"
+            fontSize="3xl"
             fontWeight="bold"
             _hover={{ backgroundColor: "black", color: "red.600" }}
             aria-label="Logout"

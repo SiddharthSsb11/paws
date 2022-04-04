@@ -41,7 +41,31 @@ const matches = [
     matchedDate: "5 March 2022",
     age: "3",
   },
-  
+  {
+    id: 5,
+    name: "Kayla",
+    imageUrl:
+      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
+    matchedDate: "5 March 2022",
+    age: "3",
+  },
+  /*{
+    id: 6,
+    name: "Kayla",
+    imageUrl:
+      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
+    matchedDate: "5 March 2022",
+    age: "3",
+  },
+   {
+    id: 7,
+    name: "Kayla",
+    imageUrl:
+      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
+    matchedDate: "5 March 2022",
+    age: "3",
+  },
+   */
 ];
 
 const MatchList = () => {
@@ -51,7 +75,7 @@ const MatchList = () => {
       flexDir="column"
       gap="1rem"
       //py={1}
-      px={2.5}
+      px={4}
       alignItems="center"
       justifyContent="start"
       maxH="30em" //25-30
