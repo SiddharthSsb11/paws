@@ -1,0 +1,12 @@
+.animate:hover {
+
+    animation: shake-animate-01 .1s infinite alternate;
+
+}
+
+@keyframes shake-animate-01 {
+    0% { transform: translate(-2px, -4px); }
+    33% { transform: translate(2px, -4px); }
+    66% { transform: translate(2px, -6px); }
+    100% { transform: translate(-2px, -6px); }
+  }

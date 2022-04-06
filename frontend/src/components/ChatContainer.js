@@ -15,10 +15,11 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import { BsChatRightDotsFill, BsChatLeftDotsFill } from "react-icons/bs";
+//import { BsChatRightDotsFill, BsChatLeftDotsFill } from "react-icons/bs";
 import React, { useState } from "react";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { GiBalloonDog, GiDogHouse, GiJumpingDog } from "react-icons/gi";
+import { GiBalloonDog } from "react-icons/gi";
+import "./ChatContainer.css"
 
 const ChatContainer = () => {
   const [selectedMatch, setSelectedMatch] = useState(true);
@@ -196,7 +197,7 @@ const ChatContainer = () => {
             </Badge>
           </Box>
 
-          <Icon color="yellow.500" h={48} w={48} as ={GiBalloonDog}></Icon>
+          <Icon className="animate" color="yellow.500" h={48} w={48} as ={GiBalloonDog}></Icon>
         </Box>
       )}
     </React.Fragment>
