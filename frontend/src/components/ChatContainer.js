@@ -14,16 +14,26 @@ import {
   ModalCloseButton,
   Button,
   Text,
+  FormControl,
+  Spinner,
+  Input,
 } from "@chakra-ui/react";
 //import { BsChatRightDotsFill, BsChatLeftDotsFill } from "react-icons/bs";
 import React, { useState } from "react";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { GiBalloonDog } from "react-icons/gi";
-import "./ChatContainer.css"
+import "./ChatContainer.css";
+//import ScrollableChat from "./ScrollableChat";
 
 const ChatContainer = () => {
   const [selectedMatch, setSelectedMatch] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [loading, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState("");
+
+  const sendMessage = () => {
+    console.log("message sent");
+  };
 
   return (
     <React.Fragment>
@@ -122,6 +132,56 @@ const ChatContainer = () => {
             >
               Chats
             </Badge>
+
+            <Box
+              d="flex"
+              flexDir="column"
+              justifyContent="flex-end"
+              p={3}
+              bg="yellow.200"
+              w="92%"
+              //h="100%"
+              height="30rem"
+              borderRadius="lg"
+              overflowY="hidden"
+              // overflow-y: auto;
+              border="1px solid black"
+            >
+              {loading ? (
+                <Spinner
+                  size="xl"
+                  w={20}
+                  h={20}
+                  alignSelf="center"
+                  margin="auto"
+                />
+              ) : (
+                <div
+                  className="messages"
+                  //overflow-y: auto
+                >
+                  ScrollableChat
+                </div>
+              )}
+
+              <FormControl
+                //onKeyDown={() => console.log("enter message sent")}
+                id="first-name"
+                isRequired
+                mt={3}
+              >
+                <Input
+                  color="black"
+                  focusBorderColor="black"
+                  bg="white"
+                  //variant="filled"
+                  //bg="#E0E0E0"
+                  placeholder="Enter a message.."
+                  //value={newMessage}
+                  //onChange={() => console.log("typing...")}
+                />
+              </FormControl>
+            </Box>
           </Box>
         </Box>
       ) : (
@@ -162,9 +222,7 @@ const ChatContainer = () => {
               _hover={{ background: "red.600", color: "white" }}
               //_hover={{ background: "black", color:"red.600"  }}
             >
-              
-              &nbsp;  Inbox &nbsp;
-             
+              &nbsp; Inbox &nbsp;
             </Badge>
           </Box>
 
@@ -177,7 +235,6 @@ const ChatContainer = () => {
             d="flex"
             justifyContent="center"
             alignItems="center"
-            
           >
             <Badge
               fontFamily="suez one"
@@ -189,7 +246,8 @@ const ChatContainer = () => {
               py={1}
               borderRadius="7px"
               letterSpacing="1.75px"
-              _hover={{ background: "red.600", color: "white" }}
+              //_hover={{ background: "red.600", color: "white" }}
+              _hover={{ backgroundColor: "black", color: "red.600" }}
               textAlign="center"
             >
               Click on a Match
@@ -197,7 +255,13 @@ const ChatContainer = () => {
             </Badge>
           </Box>
 
-          <Icon className="animate" color="yellow.500" h={48} w={48} as ={GiBalloonDog}></Icon>
+          <Icon
+            className="animate"
+            color="yellow.500"
+            h={48}
+            w={48}
+            as={GiBalloonDog}
+          ></Icon>
         </Box>
       )}
     </React.Fragment>
