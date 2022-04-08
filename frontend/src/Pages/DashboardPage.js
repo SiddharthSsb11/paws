@@ -11,8 +11,8 @@ const DashboardPage = () => {
 
   return (
     <div className="back">
-      <Box  d="flex" alignItems="center" width="100%" bg="blue" margin="1.5rem auto" justifyContent="space-between"
-        px={2} py={1}
+      <Box  d="flex" alignItems="center" width="100%"  margin="1rem" justifyContent="space-around"
+        px={1} py={1}
       >
         <MatchContainer />
         <SwipeContainer/>

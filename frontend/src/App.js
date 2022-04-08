@@ -8,7 +8,7 @@ import GalleryPage from "./Pages/GalleryPage";
 
 function App() {
   return (
-    <div className="App">
+    <div >
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/gallery" element={<GalleryPage />} />

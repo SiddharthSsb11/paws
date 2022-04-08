@@ -102,6 +102,7 @@ const HomePage = () => {
           bg="purple.900"
           //px={5}
           p={5}
+          //py={6}
           borderRadius="7px"
           border="1.5px solid black"
           boxShadow="5px 5px 5px black"

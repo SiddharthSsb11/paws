@@ -1,3 +1,16 @@
+.back{
+    
+    min-height: 100vh;
+    display: flex;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), url(./back.png);
+    background-position: center;
+    background-size: cover;
+}
+        /* background-image: linear-gradient(45deg, #fe3872, #ff5948 );
+        background-position: center;
+        background-size: cover; */
+    
+
 .gallery {
     background-color: #322659;
     grid-column: full-start / full-end;
@@ -11,6 +24,8 @@
     box-shadow: "5px 5px 5px black";
 
 }
+
+
 
 .gallery__item--1 {
     grid-row: 1 / span 3;

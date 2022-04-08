@@ -1,7 +1,7 @@
 .home {
     min-height: 100vh;
     display: flex;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), url(../assets/bg5.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(../assets/bg5.png);
     background-position: center;
     background-size: cover;
 }

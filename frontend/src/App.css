@@ -1,7 +1,8 @@
 .App {
   min-height: 100vh;
   display: flex;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./assets/bg5.png);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), url(./assets/bg5.png);
   background-position: center;
   background-size: cover;
 }
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bevan:ital@0;1&family=Bungee&family=Roboto+Slab&family=Suez+One&display=swap')

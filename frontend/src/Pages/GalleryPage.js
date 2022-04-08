@@ -1,12 +1,9 @@
 import React, { useState} from "react";
 import {
   Box,
-  Heading,
   Text,
   Image,
   Button,
-  Icon,
-  Square,
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";

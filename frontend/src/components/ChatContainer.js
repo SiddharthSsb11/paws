@@ -17,12 +17,15 @@ import {
   FormControl,
   Spinner,
   Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 //import { BsChatRightDotsFill, BsChatLeftDotsFill } from "react-icons/bs";
 import React, { useState } from "react";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { GiBalloonDog } from "react-icons/gi";
 import "./ChatContainer.css";
+import { MdSend } from "react-icons/md";
 //import ScrollableChat from "./ScrollableChat";
 
 const ChatContainer = () => {
@@ -31,8 +34,10 @@ const ChatContainer = () => {
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
 
-  const sendMessage = () => {
-    console.log("message sent");
+  const sendMessage = (event) => {
+
+    if (event.key === "Enter" || newMessage) {console.log(newMessage,"message sent");}
+    
   };
 
   return (
@@ -165,21 +170,56 @@ const ChatContainer = () => {
               )}
 
               <FormControl
-                //onKeyDown={() => console.log("enter message sent")}
+                onKeyDown={sendMessage}
                 id="first-name"
                 isRequired
                 mt={3}
               >
-                <Input
+                {/* <Input
                   color="black"
                   focusBorderColor="black"
                   bg="white"
                   //variant="filled"
                   //bg="#E0E0E0"
                   placeholder="Enter a message.."
-                  //value={newMessage}
+                  value={newMessage}
                   //onChange={() => console.log("typing...")}
-                />
+                /> */}
+
+                <InputGroup size="md">
+                  <Input
+                    fontFamily="roboto slab"
+                    id="text"
+                    name="text"
+                    type="text"
+                    color="black"
+                    focusBorderColor="black"
+                    bg="white"
+                    //variant="filled"
+                    //bg="#E0E0E0"
+                    placeholder="Enter a message.."
+                    //value={newMessage}
+                    onChange={(e)=>setNewMessage(e.target.value)}
+                    errorBorderColor="red.300"
+                  />
+                  <InputRightElement width="4.5rem">
+                    <IconButton
+                      variant="ghost"
+                      //bg="gray.700"
+                      color="gray.800"
+                      size="sm"
+                      marginRight="-1rem"
+                      //textAlign="center"
+                      fontSize="2xl"
+                      fontWeight="bold"
+                      _hover={{ backgroundColor: "black", color: "red.600" }}
+                      aria-label="Send Message"
+                      //d={{ base: "flex" }}
+                      icon={<MdSend />}
+                      onClick={sendMessage}
+                    />
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
             </Box>
           </Box>

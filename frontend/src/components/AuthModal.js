@@ -52,6 +52,9 @@ const AuthModal = ({ children, overlay }) => {
       setLoading(false);
       return;
     }
+
+    setLoading(false);
+    navigate("/dashboard");
   };
 
   return (

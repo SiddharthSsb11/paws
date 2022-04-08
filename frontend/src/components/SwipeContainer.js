@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Badge, Box, IconButton, Text } from "@chakra-ui/react";
+import { Badge, Box, Text } from "@chakra-ui/react";
 import TinderCard from "react-tinder-card";
 import { Icon } from "@chakra-ui/react";
 
 import "./SwipeContainer.css";
 import { MdSwipe } from "react-icons/md";
-import { FaHeart, FaHeartBroken, FaInfoCircle, FaPaw } from "react-icons/fa";
+import { FaInfoCircle, FaPaw } from "react-icons/fa";
 
 import { IoFemaleSharp, IoMaleSharp } from "react-icons/io5";
 import { GiBrokenHeartZone, GiPiercedHeart } from "react-icons/gi";
+
+import "./ChatContainer.css"
 
 const characters = [
   {
@@ -61,7 +63,7 @@ const SwipeContainer = () => {
     <Box
       d="flex"
       flexDir="column"
-      gap="1.2rem"
+      gap="0.7rem"
       bg="purple.900"
       height="42rem"
       width="42.5%"
@@ -83,6 +85,7 @@ const SwipeContainer = () => {
         <Badge
           fontFamily="bevan"
           variant="solid"
+          //bg="gray.800"
           bg="black"
           color="red.600"
           fontSize="4xl"
@@ -114,7 +117,7 @@ const SwipeContainer = () => {
         //bg="green.200"
         px={4}
       > 
-        <Icon color="red.500" fontSize="2.7rem" as={GiBrokenHeartZone}></Icon>
+        <Icon className="animate" color="red.500" fontSize="2.7rem" as={GiBrokenHeartZone} _hover={{color:"red.600"}}/>
         <Box className="cardContainer">
           {characters.map((character) => (
             <TinderCard
@@ -134,8 +137,8 @@ const SwipeContainer = () => {
                   //bg="red.600"  color="white"
                   bg="black" color="red.500"
                   position="absolute"
-                  bottom="-24px"
-                  borderRadius="16px"
+                  bottom="-2rem"
+                  borderRadius="1rem"
                   width="85%"
                   px={3}
                   py={1.5}
@@ -147,8 +150,11 @@ const SwipeContainer = () => {
                   alignItems="start"
                   justifyContent="center"
                   gap="2px"
+                  //_hover={{ backgroundColor: "gray.800", color: "red.600" }}
+                  _hover={{ background: "red.600", color: "white" }}
+
                 >
-                  <Text fontWeight="bold" >
+                  <Text fontWeight="bold" fontSize="xl" >
                     {" "}
                     {character.name}, &nbsp;{character.age}, &nbsp;
                     {character.gender==="Male" ? (
@@ -170,7 +176,7 @@ const SwipeContainer = () => {
             </TinderCard>
           ))}
         </Box>
-        <Icon color="red.500" fontSize="3rem" as={GiPiercedHeart}></Icon>
+        <Icon className="animate" color="red.500" fontSize="3rem" as={GiPiercedHeart} _hover={{color:"red.600"}}/>
       </Box>
 
     </Box>
