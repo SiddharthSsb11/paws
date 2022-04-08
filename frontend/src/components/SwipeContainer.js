@@ -15,9 +15,9 @@ import "./ChatContainer.css"
 const characters = [
   {
     gender: "Female",
-    age: 1,
-    name: "Richard",
-    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
+    age: 4,
+    name: "Ruby",
+    url: "https://www.rd.com/wp-content/uploads/2019/09/amazing-portrait-of-young-crossbreed-dog-german-shepherd-during-sunset-in-grass-e1576859426599-scaled.jpg?resize=700,466",
   },
   {
     gender: "Male",
@@ -38,10 +38,10 @@ const characters = [
     url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
   },
   {
-    gender: "Male",
-    age: 13,
-    name: "Dinesh",
-    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
+    gender: "Female",
+    age: 5,
+    name: "Shelly",
+    url: "https://www.rd.com/wp-content/uploads/2019/09/amazing-portrait-of-young-crossbreed-dog-german-shepherd-during-sunset-in-grass-e1576859426599-scaled.jpg?resize=700,466",
   },
 ];
 
