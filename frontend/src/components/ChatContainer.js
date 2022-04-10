@@ -143,7 +143,7 @@ const ChatContainer = () => {
               flexDir="column"
               justifyContent="flex-end"
               p={3}
-              bg="yellow.200"
+              bg="yellow.300"
               w="92%"
               //h="100%"
               height="30rem"
