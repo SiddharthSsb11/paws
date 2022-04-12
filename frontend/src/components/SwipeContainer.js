@@ -9,36 +9,42 @@ import { FaInfoCircle, FaPaw } from "react-icons/fa";
 
 import { IoFemaleSharp, IoMaleSharp } from "react-icons/io5";
 import { GiBrokenHeartZone, GiPiercedHeart } from "react-icons/gi";
+import Gender from "./Gender";
 
-import "./ChatContainer.css"
+import "./ChatContainer.css";
 
 const characters = [
   {
     gender: "Female",
+    genderShow: true,
     age: 4,
     name: "Ruby",
     url: "https://www.rd.com/wp-content/uploads/2019/09/amazing-portrait-of-young-crossbreed-dog-german-shepherd-during-sunset-in-grass-e1576859426599-scaled.jpg?resize=700,466",
   },
   {
     gender: "Male",
+    genderShow: false,
     age: 12,
     name: "Erlich",
     url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
   },
   {
     gender: "Male",
+    genderShow: true,
     age: 11,
     name: "Monica",
     url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
   },
   {
     gender: "Female",
+    genderShow: true,
     age: 10,
     name: "Jared",
     url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
   },
   {
     gender: "Female",
+    genderShow: false,
     age: 5,
     name: "Shelly",
     url: "https://www.rd.com/wp-content/uploads/2019/09/amazing-portrait-of-young-crossbreed-dog-german-shepherd-during-sunset-in-grass-e1576859426599-scaled.jpg?resize=700,466",
@@ -110,14 +116,20 @@ const SwipeContainer = () => {
 
       <Box
         d="flex"
-       //flexDir="column"
+        //flexDir="column"
         alignItems="center"
         justifyContent="space-between"
         gap="1rem"
         //bg="green.200"
         px={4}
-      > 
-        <Icon className="animate" color="red.500" fontSize="2.7rem" as={GiBrokenHeartZone} _hover={{color:"red.600"}}/>
+      >
+        <Icon
+          className="animate"
+          color="red.500"
+          fontSize="2.7rem"
+          as={GiBrokenHeartZone}
+          _hover={{ color: "red.600" }}
+        />
         <Box className="cardContainer">
           {characters.map((character) => (
             <TinderCard
@@ -135,7 +147,8 @@ const SwipeContainer = () => {
               >
                 <Box
                   //bg="red.600"  color="white"
-                  bg="black" color="red.500"
+                  bg="black"
+                  color="red.500"
                   position="absolute"
                   bottom="-2rem"
                   borderRadius="1rem"
@@ -152,33 +165,49 @@ const SwipeContainer = () => {
                   gap="2px"
                   //_hover={{ backgroundColor: "gray.800", color: "red.600" }}
                   _hover={{ background: "red.600", color: "white" }}
-
                 >
-                  <Text fontWeight="bold" fontSize="xl" >
+                  <Text fontWeight="bold" fontSize="xl">
                     {" "}
                     {character.name}, &nbsp;{character.age}, &nbsp;
-                    {character.gender==="Male" ? (
-                      <Icon mb={-0.5} fontWeight="bold" fontSize="lg" as = {IoMaleSharp}/>
-                    ): (
-                      <Icon mb={-0.5} fontWeight="bold" fontSize="lg" as = {IoFemaleSharp}/>
-                    )} &nbsp; {/* <span> { lastDirection ? (
-                      <Text>(You swiped {lastDirection})</Text>
-                    ):(
-                      <Text> (Swipe/ Drag left or right)</Text>
-                    ) }</span> */}
+                    {character.genderShow ? (
+                      <span>
+                        {character.gender === "Male" ? (
+                          <Icon
+                            mb={-0.5}
+                            fontWeight="bold"
+                            fontSize="lg"
+                            as={IoMaleSharp}
+                          />
+                        ) : (
+                          <Icon
+                            mb={-0.5}
+                            fontWeight="bold"
+                            fontSize="lg"
+                            as={IoFemaleSharp}
+                          />
+                        )}
+                      </span>
+                    ) : (
+                      <span style={{fontSize:"1.1rem",}}><u>Gender Hidden</u></span>
+                    )}
                   </Text>
-                  <Box  d="flex" alignItems="center" gap="5px">
-                    <Icon fontSize="1.2rem"  as={FaInfoCircle} />
-                    <Text > I like to go on long walks.</Text>
+                  <Box d="flex" alignItems="center" gap="5px">
+                    <Icon fontSize="1.2rem" as={FaInfoCircle} />
+                    <Text> I like to go on long walks.</Text>
                   </Box>
                 </Box>
               </Box>
             </TinderCard>
           ))}
         </Box>
-        <Icon className="animate" color="red.500" fontSize="3rem" as={GiPiercedHeart} _hover={{color:"red.600"}}/>
+        <Icon
+          className="animate"
+          color="red.500"
+          fontSize="3rem"
+          as={GiPiercedHeart}
+          _hover={{ color: "red.600" }}
+        />
       </Box>
-
     </Box>
   );
 };

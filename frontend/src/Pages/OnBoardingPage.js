@@ -17,12 +17,14 @@ import {
 import React, { useState } from "react";
 import { FaPaw } from "react-icons/fa";
 import "./OnBoardingPage.css";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
+//import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { MdSwipe } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { VStack, HStack } from "@chakra-ui/layout";
 import { InputGroup, InputRightElement } from "@chakra-ui/input";
 import { useToast } from "@chakra-ui/toast";
+import axios from "axios";
+import {useCookies} from "react-cookie"
 
 const OnBoardingPage = () => {
   const [show, setShow] = useState(false);
@@ -42,38 +44,24 @@ const OnBoardingPage = () => {
   const [gender, setGender] = useState("female");
   const [matches, setMatches] = useState([]);
 
-/*   const [formData, setFormData] = useState({
-    name: name,
-    email: email,
-    showGender: genderShow,
-    about: about,
-    dobDay: day,
-    dobMonth: month,
-    dobYear: year,
-    gender: gender,
-    species: species,
-    genderInterest: speciesInterest,
-    url: imageUrl,
-    matches: matches
-  }) */
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
-
-  console.log(day, month, year, matches, name, "day month year matches");
-  
   const navigate = useNavigate();
   const toast = useToast();
 
   const handleClick = () => setShow(!show);
   const handleGenderShow = () => setGenderShow(!genderShow);
 
+  //console.log({name, email, password, about, day, month, year, imageUrl, gender, species, speciesInterest, matches});
+
   const submitHandler = async () => {
-    /* setLoading(true);
+    setLoading(true);
 
     console.log("signup button clicked");
 
-    if (!name || !email || !password || !confirmpassword) {
+    if (!name || !email || !password || !confirmpassword || !about || !day || !month || !year || !imageUrl) {
       toast({
-        title: "Please Fill all the Feilds",
+        title: "Please Fill all the required feilds",
         status: "warning",
         duration: 3000,
         isClosable: true,
@@ -91,12 +79,71 @@ const OnBoardingPage = () => {
         isClosable: true,
         position: "bottom",
       });
+      setLoading(false);
       return;
     }
 
-    console.log(name, email, "on Signup name email"); */
+    if(day>31 || day<0 || month>12 || month<0 || year>2022 || year<2005){
+      toast({
+        title: "Incorrrect Date format",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
+    }
+    //console.log(name, email, "on Signup name email"); 
 
-    navigate("/dashboard");
+    try {
+       const config = {
+        headers: { "Content-type": "application/json" },
+      }; 
+
+      const response = await axios.post(
+        "http://127.0.0.1:5000/signup",
+        {
+          name, email, password,
+          about,
+          day, month, year, 
+          genderShow, gender,
+          species, speciesInterest,
+          imageUrl, matches
+        },
+         config 
+      );
+      console.log(response.data);
+
+      setCookie('Email', response.data.email);
+      setCookie('UserId', response.data.userId);
+      setCookie('AuthToken', response.data.token);
+      //setCookie('UserDetails', response.data.userDetails);
+
+      setLoading(false);
+      const success = response.status === 201;
+      if(success) navigate("/dashboard");
+
+      toast({
+        title: "Registration Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+
+    } catch (error) {
+      console.log(error.message);
+      toast({
+        title: "Oops! Something went wrong. Reload and try again.",
+        //description: error.response.data.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+    }
   };
 
   return (
@@ -163,6 +210,7 @@ const OnBoardingPage = () => {
             onClick={submitHandler}
             fontFamily="Suez One"
             fontSize="3xl"
+            isLoading={loading}
             //disabled={false}
           >
             Submit & Start
@@ -187,7 +235,8 @@ const OnBoardingPage = () => {
               <FormLabel fontSize="2xl" htmlFor="firstName" color="yellow.300">
                 Name
               </FormLabel>
-              <Input fontFamily="roboto slab"
+              <Input
+                fontFamily="roboto slab"
                 id="firstName"
                 type="text"
                 placeholder="Enter Your Name"
@@ -202,7 +251,8 @@ const OnBoardingPage = () => {
               <FormLabel fontSize="2xl" color="yellow.300">
                 Email Address
               </FormLabel>
-              <Input fontFamily="roboto slab"
+              <Input
+                fontFamily="roboto slab"
                 id="email"
                 name="email"
                 type="email"
@@ -219,7 +269,8 @@ const OnBoardingPage = () => {
                 Password
               </FormLabel>
               <InputGroup size="md">
-                <Input fontFamily="roboto slab"
+                <Input
+                  fontFamily="roboto slab"
                   id="paswword"
                   name="password"
                   type={show ? "text" : "password"}
@@ -248,7 +299,8 @@ const OnBoardingPage = () => {
                 Confirm Password
               </FormLabel>
               <InputGroup size="md">
-                <Input fontFamily="roboto slab"
+                <Input
+                  fontFamily="roboto slab"
                   id="paswword"
                   name="password"
                   type={show ? "text" : "password"}
@@ -272,11 +324,15 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="dob" isRequired fontFamily="roboto slab">
-              <FormLabel fontSize="2xl" color="yellow.300" fontFamily="Suez One">
+              <FormLabel
+                fontSize="2xl"
+                color="yellow.300"
+                fontFamily="Suez One"
+              >
                 🎂 Birthday
               </FormLabel>
               <HStack spacing={4}>
-                <Input 
+                <Input
                   htmlSize="xs"
                   width="auto"
                   placeholder="DD"
@@ -433,7 +489,8 @@ const OnBoardingPage = () => {
               <FormLabel fontSize="2xl" htmlFor="about" color="yellow.300">
                 About Me
               </FormLabel>
-              <Textarea fontFamily="Roboto Slab"
+              <Textarea
+                fontFamily="Roboto Slab"
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
                 placeholder="I like to stare at my reflection..."
@@ -451,7 +508,8 @@ const OnBoardingPage = () => {
               <FormLabel fontSize="xl" htmlFor="url" color="yellow.300">
                 Profile Picture
               </FormLabel>
-              <Input fontFamily="Roboto Slab"
+              <Input
+                fontFamily="Roboto Slab"
                 id="url"
                 type="url"
                 placeholder="Enter URL for profile picture..."
@@ -476,11 +534,12 @@ const OnBoardingPage = () => {
                 objectFit="cover"
                 //border="1px solid black"
               />
-            ): (
-              <Text fontSize="xs" color="gray.200" fontFamily="Roboto Slab" >
-                **To see a preview of your profile picture, please enter a valid URL of your choice. 
+            ) : (
+              <Text fontSize="xs" color="gray.200" fontFamily="Roboto Slab">
+                **To see a preview of your profile picture, please enter a valid
+                URL of your choice.
               </Text>
-              )}
+            )}
           </VStack>
         </Box>
       </Box>
