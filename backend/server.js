@@ -6,7 +6,9 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
-const { application } = require("express");
+const HttpError = require("./http-error");
+
+//const { application } = require("express");
 
 const app = express();
 app.use(cors());
@@ -14,7 +16,7 @@ const PORT = 5000;
 app.use(express.json()); // to accept json data from req body sent from fe
 
 //CORS
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -26,11 +28,7 @@ app.use((req, res, next) => {
   );
 
   next();
-});
-
-app.get("/", (req, res) => {
-  res.json("done done");
-});
+}); */////
 
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
@@ -122,7 +120,7 @@ app.post("/signup", async (req, res) => {
 });
 
 //login
-app.post("/login", async (req, res) => {
+app.post("/login", async (req, res, next) => {
 
   const client = new MongoClient(uri);
   const { email, password } = req.body;
@@ -130,22 +128,45 @@ app.post("/login", async (req, res) => {
   try {
 
     await client.connect();
-    const database = client.db("app-data");
+    const database = client.db("datingDB");
     const users = database.collection("users");
 
-    const user = await users.findone({ email });
-
+    const user = await users.findOne({ email });
+    console.log("user found", user);
     const correctPassword = await bcrypt.compare( password, user.hashed_password );
 
     if (user && correctPassword) {
       const token = jwt.sign(user, email, { expiresIn: 60 * 24 });
-      res.status(281).json({ token, userId: user.user_id, email });
+      return res.status(201).json({ token, userId: user.user_id, email, userDetails: user });
     }
     res.status(400).send("Invalid Credentials");
 
   } catch (err) {
-    console.Log(err);
+    /* return next(
+      new HttpError("Logging in failed, please try again later.", 500)
+    ); */
+    console.log(err);
   }
+});
+
+
+app.use((req, res, next) => {
+  const error = new HttpError("Could not find this route.", 404);
+  throw error;
+});
+
+app.use((error, req, res, ) => {
+
+  /* if (res.headerSent) {
+    console.log(error);
+  } */
+  ///this check is necessary for scenarios where a response header has already been sent but you encounter 
+  //an error while streaming the response to a client 
+  //Then, you forward the error encountered to the default express error handler that will handle it for you 
+
+  
+  res.status(error.code || 500);
+  res.json({ message: error.message || "An unknown error occurred!" });
 });
 
 app.listen(PORT, () => console.log("Server started on PORT 5000"));
