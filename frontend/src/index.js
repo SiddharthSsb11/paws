@@ -5,12 +5,15 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import reportWebVitals from "./reportWebVitals";
+import PawsProvider from "./Context/ChatProvider";
 
 ReactDOM.render(
   <BrowserRouter>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <PawsProvider>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    </PawsProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );
