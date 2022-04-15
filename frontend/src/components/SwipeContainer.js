@@ -9,11 +9,9 @@ import { FaInfoCircle, FaPaw } from "react-icons/fa";
 
 import { IoFemaleSharp, IoMaleSharp } from "react-icons/io5";
 import { GiBrokenHeartZone, GiPiercedHeart } from "react-icons/gi";
-import Gender from "./Gender";
-
 import "./ChatContainer.css";
 
-const characters = [
+/* const prefUsers = [
   {
     gender: "Female",
     genderShow: true,
@@ -49,9 +47,9 @@ const characters = [
     name: "Shelly",
     url: "https://www.rd.com/wp-content/uploads/2019/09/amazing-portrait-of-young-crossbreed-dog-german-shepherd-during-sunset-in-grass-e1576859426599-scaled.jpg?resize=700,466",
   },
-];
+]; */
 
-const SwipeContainer = () => {
+const SwipeContainer = ({prefUsers}) => {
   const [lastDirection, setLastDirection] = useState();
 
   const swiped = (direction, nameToDelete) => {
@@ -131,16 +129,16 @@ const SwipeContainer = () => {
           _hover={{ color: "red.600" }}
         />
         <Box className="cardContainer">
-          {characters.map((character) => (
+          {prefUsers.map((prefUser) => (
             <TinderCard
               color="white"
               className="swipe"
-              key={character.name}
-              onSwipe={(dir) => swiped(dir, character.name)}
-              onCardLeftScreen={() => outOfFrame(character.name)}
+              key={prefUser.name}
+              onSwipe={(dir) => swiped(dir, prefUser.name)}
+              onCardLeftScreen={() => outOfFrame(prefUser.name)}
             >
               <Box
-                style={{ backgroundImage: "url(" + character.url + ")" }}
+                style={{ backgroundImage: "url(" + prefUser.url + ")" }}
                 className="card"
                 d="flex"
                 justifyContent="center"
@@ -168,10 +166,10 @@ const SwipeContainer = () => {
                 >
                   <Text fontWeight="bold" fontSize="xl">
                     {" "}
-                    {character.name}, &nbsp;{character.age}, &nbsp;
-                    {character.genderShow ? (
+                    {prefUser.name}, &nbsp;{2022 - prefUser.year}, &nbsp;
+                    {prefUser.genderShow ? (
                       <span>
-                        {character.gender === "Male" ? (
+                        {prefUser.gender === "Male" ? (
                           <Icon
                             mb={-0.5}
                             fontWeight="bold"
@@ -193,7 +191,7 @@ const SwipeContainer = () => {
                   </Text>
                   <Box d="flex" alignItems="center" gap="5px">
                     <Icon fontSize="1.2rem" as={FaInfoCircle} />
-                    <Text> I like to go on long walks.</Text>
+                    <Text> {prefUser.about}</Text>
                   </Box>
                 </Box>
               </Box>
