@@ -28,7 +28,7 @@ app.use(express.json()); // to accept json data from req body sent from fe
   );
 
   next();
-}); */////
+});  */ ////
 
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
@@ -106,14 +106,12 @@ app.post("/signup", async (req, res) => {
       expiresIn: 60 * 24,
     });
 
-    res
-      .status(201)
-      .json({
-        token,
-        userId: generatedUserId,
-        email: sanitizedEmail,
-        userDetails: data,
-      });
+    res.status(201).json({
+      token,
+      userId: generatedUserId,
+      email: sanitizedEmail,
+      userDetails: data,
+    });
   } catch (err) {
     console.log(err);
   }
@@ -121,26 +119,28 @@ app.post("/signup", async (req, res) => {
 
 //login
 app.post("/login", async (req, res, next) => {
-
   const client = new MongoClient(uri);
   const { email, password } = req.body;
 
   try {
-
     await client.connect();
     const database = client.db("datingDB");
     const users = database.collection("users");
 
     const user = await users.findOne({ email });
-    console.log("user found", user);
-    const correctPassword = await bcrypt.compare( password, user.hashed_password );
+    //console.log("user found", user);
+    const correctPassword = await bcrypt.compare(
+      password,
+      user.hashed_password
+    );
 
     if (user && correctPassword) {
       const token = jwt.sign(user, email, { expiresIn: 60 * 24 });
-      return res.status(201).json({ token, userId: user.user_id, email, userDetails: user });
+      return res
+        .status(201)
+        .json({ token, userId: user.user_id, email, userDetails: user });
     }
     res.status(400).send("Invalid Credentials");
-
   } catch (err) {
     /* return next(
       new HttpError("Logging in failed, please try again later.", 500)
@@ -149,22 +149,81 @@ app.post("/login", async (req, res, next) => {
   }
 });
 
+//getting user
+app.get("/user", async (req, res) => {
+  const client = new MongoClient(uri);
+  const userId = req.query.userId; //req.params.userId //try sendign within the req url frm fe
 
+  try {
+    await client.connect();
+    const database = client.db("datingDB");
+    const users = database.collection("users");
+
+    const query = { user_id: userId };
+    const user = await users.findOne(query);
+    //console.log(user);
+    res.send(user);
+  } finally {
+    await client.close();
+  }
+});
+
+//PREFFERED USERS
+app.get("/preferredUsers", async (req, res) => {
+  const client = new MongoClient(uri);
+  const interest = req.query.interest;
+  console.log("interest ", interest);
+
+  try {
+    await client.connect();
+    const database = client.db("datingDB");
+    const users = database.collection("users");
+
+    const query = { species: interest }; // species: { $eq : 'dog'} // species: interest
+    const preferredUsers = await users.find(query).toArray();
+    //console.log("prefered users",preferredUsers)
+    res.send(preferredUsers);
+  } finally {
+    await client.close();
+  }
+});
+
+//ADDING A MATCH
+app.put("/addmatch", async (req, res) => {
+  const client = new MongoClient(uri);
+  const { userId, matchedUserId } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db("datingDB");
+    const users = database.collection("users");
+
+    const query = { user_id: userId };
+    const updateDocument = { $push: { matches: { user_id: matchedUserId } } };
+    const user = await users.updateOne(query, updateDocument);
+    const updatedUserWithMatches = await users.findOne(query);
+    console.log(updatedUserWithMatches);
+    //res.send(user);
+    res.send(updatedUserWithMatches);
+  } finally {
+    await client.close();
+  }
+});
+
+//Unknow route error handling
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
   throw error;
 });
 
-app.use((error, req, res, ) => {
-
+app.use((error, req, res) => {
   /* if (res.headerSent) {
     console.log(error);
   } */
-  ///this check is necessary for scenarios where a response header has already been sent but you encounter 
-  //an error while streaming the response to a client 
-  //Then, you forward the error encountered to the default express error handler that will handle it for you 
+  ///this check is necessary for scenarios where a response header has already been sent but you encounter
+  //an error while streaming the response to a client
+  //Then, you forward the error encountered to the default express error handler that will handle it for you
 
-  
   res.status(error.code || 500);
   res.json({ message: error.message || "An unknown error occurred!" });
 });

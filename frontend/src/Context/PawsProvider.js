@@ -43,8 +43,25 @@ const PawsProvider = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user]);
 
-  console.log("fetched user context", fetchedUser);
-  console.log("localstorage user", user);
+  const updateMatches = async(matchedUserId) => {
+
+    try{
+      //config
+      const response = await axios.put("http://127.0.0.1:5000/addmatch", { userId:user?.user_id, matchedUserId});
+      //sending logged in userid and matcheduser id in body
+      console.log("response data from server on  a right swipe context",response.data);
+      //setUser(response.data);
+      getUser();
+      localStorage.setItem("pawsUserDetails", JSON.stringify(response.data));
+      setUser(response.data);
+      //console.log("fetchedUser inside updatemnatches",fetchedUser);//late inside by 1
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  console.log("localstorage user context", user);
+  //console.log("fetched user context out", fetchedUser);
 
   return (
     <React.Fragment>
@@ -55,7 +72,8 @@ const PawsProvider = (props) => {
           selectedMatch,
           setSelectedMatch,
           chats,
-          setChats
+          setChats,
+          updateMatches
         }}
       >
         {props.children}

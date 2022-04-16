@@ -1,14 +1,33 @@
 import { SettingsIcon } from "@chakra-ui/icons";
 import { Avatar, Badge, Box, IconButton, Text } from "@chakra-ui/react";
-import React from "react";
+import React, {useContext} from "react";
 import { MdSettings, } from "react-icons/md";
 import {IoLogOut} from "react-icons/io5"
 import { useNavigate } from "react-router-dom";
 import MatchList from "./MatchList"
+import { useCookies } from "react-cookie";
+import PawsContext from "../Context/paws-context";
 
-const MatchContainer = () => {
+const MatchContainer = ( props) => {
 
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const navigate = useNavigate();
+
+  //const authToken = cookies.authToken;
+
+  const { user } = useContext(PawsContext);
+
+  const logoutHandler = () => {
+
+    //removing cookies
+    removeCookie('UserId', cookies.UserId);
+    removeCookie('AuthToken', cookies.AuthToken);
+    removeCookie('Email', cookies.Email);
+
+    localStorage.removeItem("pawsUserDetails");
+    //window.location.reload();
+    navigate("/");
+  }
 
   return (
     <Box
@@ -46,8 +65,10 @@ const MatchContainer = () => {
             //size="lg"
             h={20}
             w={20}
-            name="Dog"
-            src="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            //name="XYZABC"
+            name={user.name}
+            src={user.url}           
+            //src="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
             border="1px solid black"
           />
 
@@ -71,10 +92,10 @@ const MatchContainer = () => {
               _hover={{ background: "red.600", color:"white"  }}
               //_hover={{ background: "black", color:"red.600"  }}
             >
-              Goofie
+              {user.name}
             </Badge>
 
-            <Text
+             <Text
               color="gray.800"
               fontFamily="suez one"
               fontSize="sm"
@@ -82,8 +103,8 @@ const MatchContainer = () => {
               //fontWeight="bold"
               marginLeft="2px"
             >
-              <u>Matches: 14</u>
-            </Text>
+              <u>Matches: {user.matches.length}</u>
+            </Text> 
           </Box>
         </Box>
 
@@ -99,7 +120,7 @@ const MatchContainer = () => {
             aria-label="Settings"
             icon={<MdSettings />}
             onClick={() => console.log("settings profile modal")}
-          />
+          /> 
 
           <IconButton
             variant="ghost"
@@ -112,7 +133,7 @@ const MatchContainer = () => {
             _hover={{ backgroundColor: "black", color: "red.600" }}
             aria-label="Logout"
             icon={<IoLogOut />}
-            onClick={() => navigate("/")}
+            onClick={logoutHandler}
           />
 
           
@@ -130,7 +151,7 @@ const MatchContainer = () => {
           width="100%" 
           //bg="yellow.300"
         >
-          <MatchList/>
+          {user?.matches && <MatchList matches={user.matches} />}
         </Box>
       </Box>
     </Box>
