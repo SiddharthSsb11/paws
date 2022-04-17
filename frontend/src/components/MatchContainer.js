@@ -1,15 +1,14 @@
 import { SettingsIcon } from "@chakra-ui/icons";
 import { Avatar, Badge, Box, IconButton, Text } from "@chakra-ui/react";
-import React, {useContext} from "react";
-import { MdSettings, } from "react-icons/md";
-import {IoLogOut} from "react-icons/io5"
+import React, { useContext } from "react";
+import { MdSettings } from "react-icons/md";
+import { IoLogOut } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import MatchList from "./MatchList"
+import MatchList from "./MatchList";
 import { useCookies } from "react-cookie";
 import PawsContext from "../Context/paws-context";
 
-const MatchContainer = ( props) => {
-
+const MatchContainer = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const navigate = useNavigate();
 
@@ -18,16 +17,15 @@ const MatchContainer = ( props) => {
   const { user } = useContext(PawsContext);
 
   const logoutHandler = () => {
-
     //removing cookies
-    removeCookie('UserId', cookies.UserId);
-    removeCookie('AuthToken', cookies.AuthToken);
-    removeCookie('Email', cookies.Email);
+    removeCookie("UserId", cookies.UserId);
+    removeCookie("AuthToken", cookies.AuthToken);
+    removeCookie("Email", cookies.Email);
 
     localStorage.removeItem("pawsUserDetails");
     //window.location.reload();
     navigate("/");
-  }
+  };
 
   return (
     <Box
@@ -51,7 +49,6 @@ const MatchContainer = ( props) => {
         height="16%"
         bg="yellow.400"
         borderRadius="5px"
-
       >
         <Box
           d="flex"
@@ -67,7 +64,7 @@ const MatchContainer = ( props) => {
             w={20}
             //name="XYZABC"
             name={user.name}
-            src={user.url}           
+            src={user.url}
             //src="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
             border="1px solid black"
           />
@@ -89,13 +86,13 @@ const MatchContainer = ( props) => {
               px={2}
               borderRadius="7px"
               letterSpacing="1.75px"
-              _hover={{ background: "red.600", color:"white"  }}
+              _hover={{ background: "red.600", color: "white" }}
               //_hover={{ background: "black", color:"red.600"  }}
             >
               {user.name}
             </Badge>
 
-             <Text
+            <Text
               color="gray.800"
               fontFamily="suez one"
               fontSize="sm"
@@ -104,7 +101,7 @@ const MatchContainer = ( props) => {
               marginLeft="2px"
             >
               <u>Matches: {user.matches.length}</u>
-            </Text> 
+            </Text>
           </Box>
         </Box>
 
@@ -120,7 +117,7 @@ const MatchContainer = ( props) => {
             aria-label="Settings"
             icon={<MdSettings />}
             onClick={() => console.log("settings profile modal")}
-          /> 
+          />
 
           <IconButton
             variant="ghost"
@@ -135,24 +132,60 @@ const MatchContainer = ( props) => {
             icon={<IoLogOut />}
             onClick={logoutHandler}
           />
-
-          
         </Box>
       </Box>
 
-      <Box d="flex" flexDir="column" alignItems="center" gap="1.2rem" >
-        <Badge variant="outline" colorScheme="yellow" fontSize="xl" fontFamily="bungee" px={1.5}
-          letterSpacing="1.25px"
-        >
-        Matches
-        </Badge>
+      <Box d="flex" flexDir="column" alignItems="center" gap="1.2rem">
+        {user.matches.length === 0 ? (
+          <Box marginTop="1.8rem"
+            bg="yellow.300"
+            height="14rem"
+            width="90%"
+            borderRadius="7px"
+            border="1.5px solid black"
+            d="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Badge
+              fontFamily="suez one"
+              variant="solid"
+              bg="red.600"
+              color="white"
+              fontSize="2xl"
+              px={3}
+              py={1}
+              borderRadius="7px"
+              letterSpacing="1.75px"
+              //_hover={{ background: "red.600", color: "white" }}
+              _hover={{ backgroundColor: "black", color: "red.600" }}
+              textAlign="center"
+            >
+              Swipe/drag right
+              <br />to have a match
+            </Badge>
+          </Box>
+        ) : (
+          <>
+            <Badge
+              variant="outline"
+              colorScheme="yellow"
+              fontSize="xl"
+              fontFamily="bungee"
+              px={1.5}
+              letterSpacing="1.25px"
+            >
+              Matches
+            </Badge>
 
-        <Box 
-          width="100%" 
-          //bg="yellow.300"
-        >
-          {user?.matches && <MatchList matches={user.matches} />}
-        </Box>
+            <Box
+              width="100%"
+              //bg="yellow.300"
+            >
+              {user?.matches && <MatchList matches={user.matches} />}
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );
