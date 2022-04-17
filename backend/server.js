@@ -202,13 +202,76 @@ app.put("/addmatch", async (req, res) => {
     const updateDocument = { $push: { matches: { user_id: matchedUserId } } };
     const user = await users.updateOne(query, updateDocument);
     const updatedUserWithMatches = await users.findOne(query);
-    console.log(updatedUserWithMatches);
+    //console.log(updatedUserWithMatches);
+
     //res.send(user);
     res.send(updatedUserWithMatches);
   } finally {
     await client.close();
   }
 });
+
+//deleting a matched
+app.put('/deletematch', async (req, res) => {
+  const client = new MongoClient(uri);  
+  const { userId, deleteMatchId } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db("datingDB");
+    const users = database.collection("users");
+
+    const query = { user_id: userId };
+
+/*     const user = await users.findOne(query);
+    user.matches = user.matches.filter( ({ user_id }) => user_id !== deleteMatchId );
+    await user.save();
+    console.log(user); */
+
+    const updateDocument = { $pull: { matches: { user_id: deleteMatchId } } };
+    const user = await users.updateOne(query, updateDocument);
+    const updatedUser = await users.findOne(query);
+    console.log('match removed',updatedUser);
+    
+    res.send(updatedUser);
+
+  }finally{
+    await client.close();
+  }
+})
+
+
+//getting matched matchedProfiles
+app.get('/matchedusers', async (req, res) => {
+
+  const client = new MongoClient(uri);
+  const matchedUsersIds = JSON.parse(req.query.matchedUsersIds);
+  console.log(matchedUsersIds);
+
+  try{
+
+    await client.connect();
+    const database = client.db("datingDB");
+    const users = database.collection("users");
+
+    const pipeline = [
+      {
+        '$match': {
+          'user_id': {
+            '$in': matchedUsersIds
+          }
+        }
+      }
+    ]
+
+    const matchedUsers = await users.aggregate(pipeline).toArray();
+    //console.log("matched users",matchedUsers);
+    res.send(matchedUsers); 
+  }finally {
+    await client.close();
+  }
+});
+
 
 //Unknow route error handling
 app.use((req, res, next) => {

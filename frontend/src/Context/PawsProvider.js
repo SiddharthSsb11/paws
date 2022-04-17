@@ -49,7 +49,23 @@ const PawsProvider = (props) => {
       //config
       const response = await axios.put("http://127.0.0.1:5000/addmatch", { userId:user?.user_id, matchedUserId});
       //sending logged in userid and matcheduser id in body
-      console.log("response data from server on  a right swipe context",response.data);
+      //console.log("response data from server on  a right swipe context",response.data);
+      //setUser(response.data);
+      getUser();
+      localStorage.setItem("pawsUserDetails", JSON.stringify(response.data));
+      setUser(response.data);
+      //console.log("fetchedUser inside updatemnatches",fetchedUser);//late inside by 1
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  const deleteMatch = async(deleteMatchId) => {
+    
+    try{
+      //config
+      const response = await axios.put("http://127.0.0.1:5000/deletematch", { userId:user?.user_id, deleteMatchId});
+      console.log("response data from server on deleting a match",response.data);
       //setUser(response.data);
       getUser();
       localStorage.setItem("pawsUserDetails", JSON.stringify(response.data));
@@ -73,7 +89,8 @@ const PawsProvider = (props) => {
           setSelectedMatch,
           chats,
           setChats,
-          updateMatches
+          updateMatches,
+          deleteMatch,
         }}
       >
         {props.children}

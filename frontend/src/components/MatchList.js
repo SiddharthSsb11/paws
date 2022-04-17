@@ -1,74 +1,61 @@
-import React from "react";
-import { List, ListItem, IconButton, Avatar, Badge } from "@chakra-ui/react";
+import React, { useContext, useEffect, useState } from "react";
+import { List, ListItem, IconButton, Avatar, Badge, useDisclosure } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/toast";
 import { useNavigate } from "react-router-dom";
 import { Box, Text } from "@chakra-ui/layout";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { AiFillMessage } from "react-icons/ai";
+import {RiMessage2Fill} from "react-icons/ri";
+import PawsContext from "../Context/paws-context";
+import axios from "axios";
 
-const matches = [
-  {
-    id: 1,
-    name: "Lyla",
-    imageUrl:
-      "https://www.rover.com/blog/wp-content/uploads/2019/12/uniquefemaledog.jpg",
-    matchedDate: "6 March 2022",
-    age: "4",
-  },
 
-  {
-    id: 2,
-    name: "Kayla",
-    imageUrl:
-      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
-    matchedDate: "5 March 2022",
-    age: "3",
-  },
+const MatchList = ({matches}) => {
 
-  /* {
-    id: 3,
-    name: "Kayla",
-    imageUrl:
-      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
-    matchedDate: "5 March 2022",
-    age: "3",
-  },
-  {
-    id: 4,
-    name: "Kayla",
-    imageUrl:
-      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
-    matchedDate: "5 March 2022",
-    age: "3",
-  },
-  {
-    id: 5,
-    name: "Kayla",
-    imageUrl:
-      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
-    matchedDate: "5 March 2022",
-    age: "3",
-  }, */
-  /*{
-    id: 6,
-    name: "Kayla",
-    imageUrl:
-      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
-    matchedDate: "5 March 2022",
-    age: "3",
-  },
-   {
-    id: 7,
-    name: "Kayla",
-    imageUrl:
-      "https://www.dognamegenerator.net/wp-content/uploads/2020/11/female-dog-names-usa.jpg",
-    matchedDate: "5 March 2022",
-    age: "3",
-  },
-   */
-];
+  const [matchedProfiles, setMatchedProfiles] = useState(null);
+  const { user, selectedMatch, setSelectedMatch, deleteMatch } = useContext(PawsContext);
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-const MatchList = () => {
+  const matchedUsersIds = matches?.map(({user_id})=>user_id);
+  
+  const getMatchedProfile = async () => {
+    try{
+      const response = await axios.get('http://127.0.0.1:5000/matchedusers',{
+        params: {matchedUsersIds: JSON.stringify(matchedUsersIds)}
+      })
+
+      //console.log(response.data);
+      setMatchedProfiles(response.data);
+
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  //console.log(matches);
+
+  useEffect(()=>{
+    getMatchedProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matches]);
+
+  //console.log(matchedProfiles);
+
+
+  const deleteHandler = (id, name) => {
+    console.log("delete clicked", id);
+    deleteMatch(id);
+
+    toast({
+      title: `Unmatched ${name}`,
+      status: "warning",
+      duration: 3000,
+      isClosable: true,
+      position: "bottom-left",
+    });
+  };
+
   return (
     <List
       d="flex"
@@ -84,9 +71,9 @@ const MatchList = () => {
       width="100%"
       borderRadius="7px"
     >
-      {matches.map((match) => (
+      {matchedProfiles?.map((matchedProfile) => (
         <ListItem
-          key={match.id}
+          key={matchedProfile.user_id}//matchedProfile.user_id
           d="flex"
           alignItems="center"
           justifyContent="space-between"
@@ -107,8 +94,8 @@ const MatchList = () => {
             <Avatar
               size="md"
               //h={20}w={20}
-              name={match.name}
-              src={match.imageUrl}
+              name={matchedProfile.name}
+              src={matchedProfile.url}
               border="1px solid black"
             />
 
@@ -125,7 +112,7 @@ const MatchList = () => {
               letterSpacing="1.5px"
               //_hover={{ background: "black", color:"red.600"  }}
             >
-              {match.name}
+              {matchedProfile.name}
             </Badge>
           </Box>
 
@@ -138,9 +125,9 @@ const MatchList = () => {
               fontSize="xl"
               _hover={{ background: "black", color: "green.600" }}
               aria-label="Delete Transaction"
-              icon={<AiFillMessage />}
+              icon={<RiMessage2Fill />}
               mr={2}
-              onClick={() => console.log("message")}
+              onClick={() => setSelectedMatch(true)} //setSelectedMatch(match)
             />
             <IconButton
               variant="ghost"
@@ -151,7 +138,7 @@ const MatchList = () => {
               _hover={{ background: "black", color: "red.600" }}
               aria-label="Delete Transaction"
               icon={<DeleteIcon />}
-              onClick={() => console.log("delete match")}
+              onClick={deleteHandler.bind(null, matchedProfile.user_id, matchedProfile.name)}
             />
           </Box>
         </ListItem>
