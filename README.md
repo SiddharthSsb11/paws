@@ -1,9 +1,12 @@
 # Paws
+> Finding Playmates or Dates for your Pets.
 
+A fully-feautred platform for Dating or finding Playmates for your Pets.
+Match up with local pets and pet lovers for friendship, play-dates or fun
+outdoor playing.
 ```
-This is still a work in progress. Work yet to be done:
-- Backend API code
-- Responsiveness
+This is still a work in progress. 
+Responsiveness aspect of this application is still incomplete.
 ```
 ### Few Screenshots
 
@@ -11,25 +14,24 @@ This is still a work in progress. Work yet to be done:
 ![Gallery](/screenshots/2.png "Gallery")
 ![Register](/screenshots/3.png "Register")
 ![Dashboard](/screenshots/4.png "Dashboard")
+![Dashboard](/screenshots/5.png "Dashboard")
 
-A fully-feautred platform for Dating or finding Playmates for your Pets.
-Match up with local pets and pet lovers for friendship, play-dates or fun
-outdoor playing. <br>
- Made using [React JS](https://reactjs.org/docs/getting-started.html), a JavaScript library to make awesome UI by Facebook, [Node JS](https://nodejs.org/en/docs), [Express JS](https://expressjs.com/en/api.html) and [MongoDB](https://docs.mongodb.com/).
+<hr>
 
-This application uses [React JS](https://reactjs.org/docs/getting-started.html) component oriented UI creation paradigm. All components are written in [JSX](https://reactjs.org/docs/jsx-in-depth.html) and ES6 style and are
-combined to get a single build for production purpose using [Webpack 5](https://webpack.js.org/concepts/).
+### Tech Stack
 
-[Chakra-UI](https://chakra-ui.com/guides/getting-started/cra-guide) CSS framework used in this application.
+<table width="1000">
+	<tr>
+		<td align="center"><a href="https://www.mongodb.com/"><img src="https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg" width="80px;" height="75px;" style="border-radius: 8px;" alt="Sass"/><br /><b><font color="#777">MongoDB</font></b></a></td>
+        <td align="center"><a href="https://www.apollographql.com/"><img src="https://cdn.worldvectorlogo.com/logos/express-109.svg" width="75px;"  alt="Express JS"/><br /><b><font color="#777">ExpressJS</font></b></a></td>
+        <td align="center"><a href="https://reactjs.org/"><img src="https://cdn.worldvectorlogo.com/logos/react-2.svg" width="110px;" height="75px;" alt="Javascript"/><br /><b><font color="#777">React</font></b></a></td>
+        <td align="center"><a href="https://nodejs.org/en/"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" width="75px;" height="75px;" alt="NodeJS"/><br /><b><font color="#777">NodeJS</font></b></a></td>
+		<td align="center"><a href="https://chakra-ui.com/"><img src="https://avatars.githubusercontent.com/u/54212428?s=280&v=4" width="75px;" height="75px;" alt="Socket.IO"/><br /><b><font color="#777">ChakraUI</font></b></a></td>
+        <td align="center"><a href="https://sass-lang.com/"><img src="https://cdn.worldvectorlogo.com/logos/sass-1.svg" width="80px;" height="75px;" style="border-radius: 8px;" alt="Sass"/><br /><b><font color="#777">Sass</font></b></a></td>
+	</tr>	
+</table>
 
-ES6 `module` creation along with `import /export` is used. [Babel](https://babeljs.io/docs/en/babel-preset-react) is used to _transpile_ all [JSX](https://reactjs.org/docs/jsx-in-depth.html) code to vanilla JavaScript code. To install all the dependecies `npm` is used.
-
-Back end is implemented using [Node JS](https://nodejs.org/en/docs), [Express JS](https://expressjs.com/en/api.html) and [MongoDB](https://docs.mongodb.com/). [Atlas](https://www.mongodb.com/cloud/atlas), the _Cloud_ version of [MongoDB](https://docs.mongodb.com/) is used. Communication is done using [Socket.io](https://www.npmjs.com/package/socket.io).
-
-This is a _responsive web application_ for viewing in both Mobile and Desktop.
-
-
-## Features
+### Features
 
 - Latest features of JavaScript i.e. ES6, ES7, ES8 is used
 - [React JS Hooks](https://reactjs.org/docs/hooks-intro.html) are used with Functional components
@@ -50,13 +52,9 @@ This is a _responsive web application_ for viewing in both Mobile and Desktop.
  <li>Error will be shown if the credentials are not correct</li>
 
  <li> Choose your gender, species and who do you want to match with. </li>
+ <li> Option for you to choose between to show or not to show your gender on your profile. </li>
  <li> Functionality and features like swipe left and right, view information of desired pets and swipe accordingly. </li>   
  <li> Send messages and have a chat with matched up pets. </li>
  <li> If not sure about your decision, remove the matched up pets. </li>
  <li> All the conversation are stored. matches and onformation in the database i.e. <i>persistant</i>
 </ul>
-
-
-## Tech Stack
-
-MongoDB, Express, React, Node, Socket.IO, Chakra-UI
