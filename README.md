@@ -27,7 +27,6 @@ Responsiveness aspect of this application is still incomplete.
         <td align="center"><a href="https://reactjs.org/"><img src="https://cdn.worldvectorlogo.com/logos/react-2.svg" width="110px;" height="75px;" alt="Javascript"/><br /><b><font color="#777">React</font></b></a></td>
         <td align="center"><a href="https://nodejs.org/en/"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" width="75px;" height="75px;" alt="NodeJS"/><br /><b><font color="#777">NodeJS</font></b></a></td>
 		<td align="center"><a href="https://chakra-ui.com/"><img src="https://avatars.githubusercontent.com/u/54212428?s=280&v=4" width="75px;" height="75px;" alt="Socket.IO"/><br /><b><font color="#777">ChakraUI</font></b></a></td>
-        <td align="center"><a href="https://sass-lang.com/"><img src="https://cdn.worldvectorlogo.com/logos/sass-1.svg" width="80px;" height="75px;" style="border-radius: 8px;" alt="Sass"/><br /><b><font color="#777">Sass</font></b></a></td>
 	</tr>	
 </table>
 
