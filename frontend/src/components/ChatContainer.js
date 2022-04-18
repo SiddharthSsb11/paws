@@ -19,26 +19,37 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Avatar,
 } from "@chakra-ui/react";
 //import { BsChatRightDotsFill, BsChatLeftDotsFill } from "react-icons/bs";
-import React, { useState } from "react";
-import { IoArrowBackCircleSharp } from "react-icons/io5";
+import React, { useContext, useRef, useState } from "react";
+import { IoArrowBackCircleSharp, IoFemaleSharp, IoMaleSharp } from "react-icons/io5";
 import { GiBalloonDog } from "react-icons/gi";
 import "./ChatContainer.css";
 import { MdSend } from "react-icons/md";
 //import ScrollableChat from "./ScrollableChat";
+import PawsContext from "../Context/paws-context";
+import { FaInfoCircle } from "react-icons/fa";
 
 const ChatContainer = () => {
-  const [selectedMatch, setSelectedMatch] = useState(true);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [overlay, setOverlay] = useState("");
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
 
-  const sendMessage = (event) => {
+  const initialRef = useRef();
 
-    if (event.key === "Enter" || newMessage) {console.log(newMessage,"message sent");}
-    
+  const { user, selectedMatch, setSelectedMatch } = useContext(PawsContext);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const sendMessage = (event) => {
+    if (event.key === "Enter" || newMessage) {
+      console.log(newMessage, "message sent");
+    }
   };
+
+  const OverlayOne = () => (
+    <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(5px)" />
+  );
 
   return (
     <React.Fragment>
@@ -92,7 +103,7 @@ const ChatContainer = () => {
               _hover={{ background: "red.600", color: "white" }}
               //_hover={{ background: "black", color:"red.600"  }}
             >
-              Kayla
+              {selectedMatch.name}
             </Badge>
             <IconButton
               variant="ghost"
@@ -106,22 +117,109 @@ const ChatContainer = () => {
               aria-label="View Details"
               //d={{ base: "flex" }}
               icon={<ViewIcon />}
-              onClick={onOpen}
+              onClick={() => {
+                setOverlay(<OverlayOne />);
+                onOpen();
+              }}
             />
 
-            <Modal isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Modal Title</ModalHeader>
+            <Modal
+              isOpen={isOpen}
+              onClose={onClose}
+              size="2xl"
+              initialFocusRef={initialRef}
+            >
+              {overlay}
+              <ModalContent
+                border="1.5px solid black"
+                bg="purple.900"
+                color="white"
+                fontFamily="roboto slab"
+                p={2}
+              >
+                <ModalHeader fontSize="4xl" borderBottom="3px solid white">
+                  <Box d="flex" alignItems="center" gap="10px">
+                    <Icon as={FaInfoCircle} />
+                    <Text fontSize="5xl">Information</Text>
+                  </Box>
+                </ModalHeader>
                 <ModalCloseButton />
-                <ModalBody>hello profimle modal</ModalBody>
+                <ModalBody marginTop="10px" pb={5}>
+                  <Box
+                    d="flex"
+                    alignItems="center"
+                    //justifyContent="space-between"
+                    //flexDir={{ base: "column", md: "row" }}
+                    bg="yellow.400"
+                    gap="1rem"
+                    px={2.5}
+                    height="12rem"
+                    borderRadius="10px" border="1px solid black"
+                  >
+                    <Avatar
+                      //size="lg"
+                      h={44}
+                      w={44}
+                      name={selectedMatch.name}
+                      src={selectedMatch.url}
+                      border="1px solid black"
+                    />
 
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={onClose}>
-                    Close
-                  </Button>
-                  <Button variant="ghost">Secondary Action</Button>
-                </ModalFooter>
+                    <Box
+                  //bg="red.600"  color="white"
+                  bg="black"
+                  color="red.500"
+                  borderRadius="1rem"
+                  width="100%"
+                  px={3}
+                  py={1.5}
+                  fontFamily="roboto slab"
+                  fontWeight="bold"
+                  border="1px solid black"
+                  d="flex"
+                  flexDirection="column"
+                  alignItems="start"
+                  justifyContent="center"
+                  gap="4px"
+                  fontSize="xl"
+                  _hover={{ backgroundColor: "red.600", color: "white" }}
+                  //_hover={{ background: "black", color: "red.500" }}
+                >
+                  <Text>Name - {selectedMatch.name}</Text>
+                  <Text>Age - {2022 - selectedMatch.year} years </Text>
+                  <Text> Gender - 
+                  
+                  {selectedMatch.genderShow ? (
+                    <span>
+                      {selectedMatch.gender === "Male" ? ( 
+                        <Icon 
+                          mb={-0.5}
+                          fontWeight="bold"
+                          fontSize="lg"
+                          as={IoMaleSharp}
+                        /> 
+                      ) : (
+                        <Icon
+                          mb={-0.5}
+                          fontWeight="bold"
+                          fontSize="lg"
+                          as={IoFemaleSharp}
+                        />
+                      )}
+                    </span>
+                  ) : (
+                    <span style={{fontSize:"1.2rem",}}>&nbsp;Gender Hidden</span>
+                  )}</Text> 
+                    
+                    
+                  
+                  <Box d="flex" alignItems="center" gap="5px">
+                    <Icon fontSize="1.2rem" as={FaInfoCircle} />
+                    <Text fontSize="xl">{selectedMatch.about}</Text>
+                  </Box>
+                </Box>
+                  </Box>
+                </ModalBody>
               </ModalContent>
             </Modal>
           </Box>
@@ -199,7 +297,7 @@ const ChatContainer = () => {
                     //bg="#E0E0E0"
                     placeholder="Enter a message.."
                     //value={newMessage}
-                    onChange={(e)=>setNewMessage(e.target.value)}
+                    onChange={(e) => setNewMessage(e.target.value)}
                     errorBorderColor="red.300"
                   />
                   <InputRightElement width="4.5rem">
