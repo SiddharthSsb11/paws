@@ -212,8 +212,8 @@ app.put("/addmatch", async (req, res) => {
 });
 
 //deleting a matched
-app.put('/deletematch', async (req, res) => {
-  const client = new MongoClient(uri);  
+app.put("/deletematch", async (req, res) => {
+  const client = new MongoClient(uri);
   const { userId, deleteMatchId } = req.body;
 
   try {
@@ -223,7 +223,7 @@ app.put('/deletematch', async (req, res) => {
 
     const query = { user_id: userId };
 
-/*     const user = await users.findOne(query);
+    /*     const user = await users.findOne(query);
     user.matches = user.matches.filter( ({ user_id }) => user_id !== deleteMatchId );
     await user.save();
     console.log(user); */
@@ -231,47 +231,82 @@ app.put('/deletematch', async (req, res) => {
     const updateDocument = { $pull: { matches: { user_id: deleteMatchId } } };
     const user = await users.updateOne(query, updateDocument);
     const updatedUser = await users.findOne(query);
-    console.log('match removed',updatedUser);
-    
-    res.send(updatedUser);
+    console.log("match removed", updatedUser);
 
-  }finally{
+    res.send(updatedUser);
+  } finally {
     await client.close();
   }
-})
+});
 
-
-//getting matched matchedProfiles
-app.get('/matchedusers', async (req, res) => {
-
+//getting matchedProfiles
+app.get("/matchedusers", async (req, res) => {
   const client = new MongoClient(uri);
   const matchedUsersIds = JSON.parse(req.query.matchedUsersIds);
-  console.log(matchedUsersIds);
+  //console.log(matchedUsersIds);
 
-  try{
-
+  try {
     await client.connect();
     const database = client.db("datingDB");
     const users = database.collection("users");
 
     const pipeline = [
       {
-        '$match': {
-          'user_id': {
-            '$in': matchedUsersIds
-          }
-        }
-      }
-    ]
+        $match: {
+          user_id: {
+            $in: matchedUsersIds,
+          },
+        },
+      },
+    ];
 
     const matchedUsers = await users.aggregate(pipeline).toArray();
     //console.log("matched users",matchedUsers);
-    res.send(matchedUsers); 
-  }finally {
+    res.send(matchedUsers);
+  } finally {
     await client.close();
   }
 });
 
+//getting messages
+app.get("/messages", async (req, res) => {
+  const client = new MongoClient(uri);
+  const { userId, correspondingUserId } = req.query;
+  //console.log(userId, correspondingUserId);
+
+  try {
+    await client.connect();
+    const database = client.db("datingDB");
+    const messages = database.collection("messages");
+    const query = {
+      from_userId: userId,
+      to_userId: correspondingUserId,
+    };
+    const foundMessages = await messages.find(query).toArray();
+    res.send(foundMessages);
+  } finally {
+    await client.close();
+  }
+});
+
+//adding a message
+app.post("/message", async (req, res) => {
+  const client = new MongoClient(uri);
+  const message = req.body.message;
+
+  try {
+    await client.connect();
+    const database = client.db("datingDB");
+    const messages = database.collection("messages");
+
+    const adddedMessage = await messages.insertOne(message);
+    //console.log(adddedMessage);
+    res.send(adddedMessage);
+
+  } finally {
+    await client.close();
+  }
+});
 
 //Unknow route error handling
 app.use((req, res, next) => {

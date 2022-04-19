@@ -19,37 +19,128 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Avatar,
+  Avatar, useToast
 } from "@chakra-ui/react";
 //import { BsChatRightDotsFill, BsChatLeftDotsFill } from "react-icons/bs";
-import React, { useContext, useRef, useState } from "react";
-import { IoArrowBackCircleSharp, IoFemaleSharp, IoMaleSharp } from "react-icons/io5";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import {
+  IoArrowBackCircleSharp,
+  IoFemaleSharp,
+  IoMaleSharp,
+} from "react-icons/io5";
 import { GiBalloonDog } from "react-icons/gi";
 import "./ChatContainer.css";
 import { MdSend } from "react-icons/md";
 //import ScrollableChat from "./ScrollableChat";
 import PawsContext from "../Context/paws-context";
 import { FaInfoCircle } from "react-icons/fa";
+import axios from "axios";
+import ScrollableChat from "./ScrollableChat";
 
 const ChatContainer = () => {
   const [overlay, setOverlay] = useState("");
   const [loading, setLoading] = useState(false);
+  const [usersMessages, setUsersMessages] = useState(null);
+  const [selectedMatchMessages, setSelectedMatchMessages] = useState(null);
   const [newMessage, setNewMessage] = useState("");
 
   const initialRef = useRef();
-
   const { user, selectedMatch, setSelectedMatch } = useContext(PawsContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const sendMessage = (event) => {
-    if (event.key === "Enter" || newMessage) {
-      console.log(newMessage, "message sent");
-    }
-  };
+  const toast = useToast();
 
   const OverlayOne = () => (
     <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(5px)" />
   );
+
+  const getUsersMessages = async()=>{
+    try{
+
+      const response = await axios.get("http://127.0.0.1:5000/messages" , {
+        params: {userId: user?.user_id, correspondingUserId: selectedMatch?.user_id }
+      });
+
+      console.log("user messages from server", response.data);
+      setUsersMessages(response.data);
+
+    }catch(error){
+      console.log (error);
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Messages",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  }
+
+  const getSelectedMatchMessages = async()=>{
+    try{
+      const response = await axios.get('http://127.0.0.1:5000/messages', {
+        params: {userId: selectedMatch?.user_id, correspondingUserId: user?.user_id}
+      });
+      console.log('selectedMatch messages from server', response.data);
+      setSelectedMatchMessages(response.data);
+    }catch (error){
+      console.log (error);
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Messages",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+
+    
+  }
+
+  useEffect(() => {
+    getUsersMessages();
+    getSelectedMatchMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[/* selectedMatch */])
+
+  const sendMessage = async (event) => {
+    if (event.key === "Enter" && newMessage) {
+      const message = {
+        timestamp: new Date().toISOString(),
+        from_userId: user?.user_id,
+        to_userId: selectedMatch?.user_id,
+        message: newMessage,
+      };
+      try {
+        await axios.post("http://127.0.0.1:5000/message", { message });
+        setNewMessage("");
+        //console.log("meeage sent server response",response.data)
+        //getUsersMessages();
+        //getClickedUsersMessages();
+        toast({
+          title: "Message Sent!",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+        
+      } catch (error) {
+        console.log(error);
+        toast({
+          title: "Error Occured!",
+          description: "Failed to send the Message",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+      }
+    }
+  };
+
+  const inOrderMessages = [];
 
   return (
     <React.Fragment>
@@ -154,7 +245,8 @@ const ChatContainer = () => {
                     gap="1rem"
                     px={2.5}
                     height="12rem"
-                    borderRadius="10px" border="1px solid black"
+                    borderRadius="10px"
+                    border="1px solid black"
                   >
                     <Avatar
                       //size="lg"
@@ -166,58 +258,65 @@ const ChatContainer = () => {
                     />
 
                     <Box
-                  //bg="red.600"  color="white"
-                  bg="black"
-                  color="red.500"
-                  borderRadius="1rem"
-                  width="100%"
-                  px={3}
-                  py={1.5}
-                  fontFamily="roboto slab"
-                  fontWeight="bold"
-                  border="1px solid black"
-                  d="flex"
-                  flexDirection="column"
-                  alignItems="start"
-                  justifyContent="center"
-                  gap="4px"
-                  fontSize="xl"
-                  _hover={{ backgroundColor: "red.600", color: "white" }}
-                  //_hover={{ background: "black", color: "red.500" }}
-                >
-                  <Text>Name - {selectedMatch.name}</Text>
-                  <Text>Age - {2022 - selectedMatch.year} years </Text>
-                  <Text> Gender - 
-                  
-                  {selectedMatch.genderShow ? (
-                    <span>
-                      {selectedMatch.gender === "Male" ? ( 
-                        <Icon 
-                          mb={-0.5}
-                          fontWeight="bold"
-                          fontSize="lg"
-                          as={IoMaleSharp}
-                        /> 
-                      ) : (
-                        <Icon
-                          mb={-0.5}
-                          fontWeight="bold"
-                          fontSize="lg"
-                          as={IoFemaleSharp}
-                        />
-                      )}
-                    </span>
-                  ) : (
-                    <span style={{fontSize:"1.2rem",}}>&nbsp;Gender Hidden</span>
-                  )}</Text> 
-                    
-                    
-                  
-                  <Box d="flex" alignItems="center" gap="5px">
-                    <Icon fontSize="1.2rem" as={FaInfoCircle} />
-                    <Text fontSize="xl">{selectedMatch.about}</Text>
-                  </Box>
-                </Box>
+                      //bg="red.600"  color="white"
+                      bg="black"
+                      color="red.500"
+                      borderRadius="1rem"
+                      width="100%"
+                      px={3}
+                      py={1.5}
+                      fontFamily="roboto slab"
+                      fontWeight="bold"
+                      border="1px solid black"
+                      d="flex"
+                      flexDirection="column"
+                      alignItems="start"
+                      justifyContent="center"
+                      gap="4px"
+                      fontSize="xl"
+                      _hover={{ backgroundColor: "red.600", color: "white" }}
+                      //_hover={{ background: "black", color: "red.500" }}
+                    >
+                      <Text>Name - {selectedMatch.name}</Text>
+                      <Text>Age - {2022 - selectedMatch.year} years </Text>
+                      <Text>
+                        {" "}
+                        Gender -{" "}
+                        {selectedMatch.genderShow
+                          ? selectedMatch.gender === "male"
+                            ? "Male "
+                            : "Female "
+                          : " "}
+                        {selectedMatch.genderShow ? (
+                          <span>
+                            {selectedMatch.gender === "Male" ? (
+                              <Icon
+                                mb={-0.5}
+                                fontWeight="bold"
+                                fontSize="lg"
+                                as={IoMaleSharp}
+                              />
+                            ) : (
+                              <Icon
+                                mb={-0.5}
+                                fontWeight="bold"
+                                fontSize="lg"
+                                as={IoFemaleSharp}
+                              />
+                            )}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: "1.2rem" }}>
+                            Gender Hidden
+                          </span>
+                        )}
+                      </Text>
+
+                      <Box d="flex" alignItems="center" gap="5px">
+                        <Icon fontSize="1.2rem" as={FaInfoCircle} />
+                        <Text fontSize="xl">{selectedMatch.about}</Text>
+                      </Box>
+                    </Box>
                   </Box>
                 </ModalBody>
               </ModalContent>
@@ -263,7 +362,7 @@ const ChatContainer = () => {
                   className="messages"
                   //overflow-y: auto
                 >
-                  ScrollableChat
+                <ScrollableChat messages={inOrderMessages}/>
                 </div>
               )}
 
@@ -296,7 +395,7 @@ const ChatContainer = () => {
                     //variant="filled"
                     //bg="#E0E0E0"
                     placeholder="Enter a message.."
-                    //value={newMessage}
+                    value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     errorBorderColor="red.300"
                   />
