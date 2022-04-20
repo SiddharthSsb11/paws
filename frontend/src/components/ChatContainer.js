@@ -54,14 +54,17 @@ const ChatContainer = () => {
   );
 
   const getUsersMessages = async()=>{
+    if (!selectedMatch) return;
+    setLoading(true);
     try{
 
       const response = await axios.get("http://127.0.0.1:5000/messages" , {
         params: {userId: user?.user_id, correspondingUserId: selectedMatch?.user_id }
       });
 
-      console.log("user messages from server", response.data);
+      //console.log("user messages from server", response.data);
       setUsersMessages(response.data);
+      setLoading(false);
 
     }catch(error){
       console.log (error);
@@ -77,12 +80,15 @@ const ChatContainer = () => {
   }
 
   const getSelectedMatchMessages = async()=>{
+    if (!selectedMatch) return;
+    setLoading(true);
     try{
       const response = await axios.get('http://127.0.0.1:5000/messages', {
         params: {userId: selectedMatch?.user_id, correspondingUserId: user?.user_id}
       });
-      console.log('selectedMatch messages from server', response.data);
+      //console.log('selectedMatch messages from server', response.data);
       setSelectedMatchMessages(response.data);
+      setLoading(false);
     }catch (error){
       console.log (error);
       toast({
@@ -94,15 +100,38 @@ const ChatContainer = () => {
         position: "bottom",
       });
     }
-
-    
   }
 
   useEffect(() => {
     getUsersMessages();
     getSelectedMatchMessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[/* selectedMatch */])
+  },[selectedMatch])
+
+  const messages = [];
+
+  usersMessages?.forEach(message => {
+    const formattedMessage = {}
+    formattedMessage['name'] = user?.name;
+    formattedMessage['img'] = user?.url;
+    formattedMessage['message'] = message.message;
+    formattedMessage['timestamp'] = message.timestamp
+    messages.push(formattedMessage);
+  });
+
+  selectedMatchMessages?.forEach(message => {
+    const formattedMessage = {}
+    formattedMessage['name'] = selectedMatch?.name;
+    formattedMessage['img'] = selectedMatch?.url;
+    formattedMessage['message'] = message.message;
+    formattedMessage['timestamp'] = message.timestamp;
+    messages.push(formattedMessage);  
+  });
+
+  console.log (" usersMessages ", usersMessages);
+  console.log("selected match messages", selectedMatchMessages);
+  console.log('messages in inbox', messages);
+  const inOrderMessages = messages?.sort((a,b) => a.timestamp.localeCompare(b.timestamp));
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
@@ -116,8 +145,8 @@ const ChatContainer = () => {
         await axios.post("http://127.0.0.1:5000/message", { message });
         setNewMessage("");
         //console.log("meeage sent server response",response.data)
-        //getUsersMessages();
-        //getClickedUsersMessages();
+        getUsersMessages();
+        getSelectedMatchMessages();
         toast({
           title: "Message Sent!",
           status: "success",
@@ -139,9 +168,7 @@ const ChatContainer = () => {
       }
     }
   };
-
-  const inOrderMessages = [];
-
+ 
   return (
     <React.Fragment>
       {selectedMatch ? (
@@ -151,7 +178,7 @@ const ChatContainer = () => {
           gap="1em"
           bg="purple.900"
           height="42rem"
-          width="25%"
+          width="26.5%"
           //color="white"
           borderRadius="7px"
           border="1.5px solid black"
