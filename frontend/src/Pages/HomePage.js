@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Heading,
@@ -15,17 +15,28 @@ import CoverImage from "./img.png";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
 import AuthModal from "../components/AuthModal";
+import { useCookies } from "react-cookie";
 
 //import classes from "./HomePage.module.css";
 
 const HomePage = () => {
   const [overlay, setOverlay] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
+  const authToken = cookies.AuthToken;
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const pawsUserDetails = JSON.parse(localStorage.getItem("pawsUserDetails"));
+
+    if (pawsUserDetails /* || authToken */) navigate("/dashboard");
+  }, [navigate]);
 
   const OverlayOne = () => (
     <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(5px)" />
   );
 
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   //const handleClick = () => setShow(!show);
@@ -39,13 +50,14 @@ const HomePage = () => {
         gap="1rem"
         color="white"
         //width="60%"
+        px={{base:2, md:3}}
       >
         <Box
           //className={classes.grad}
           d="flex"
           alignItems="center"
           justifyContent="space-between"
-          gap="4em"
+          gap="2.5em"
           px={5}
           py={3.5}
           borderRadius="7px"
@@ -56,20 +68,20 @@ const HomePage = () => {
           <Box
             d="flex"
             alignItems="center"
-            gap="1em"
+            gap={{base:"0.6em", md:"1em"}}
             textAlign="left"
             bg="red.600"
             py={1.5}
-            px={4}
+            px={{base:"2", md:"4"}}
             color="yellow.400"
             borderRadius="7px"
             _hover={{ transform: "scale(1.04)" }}
             cursor="pointer"
           >
-            <Icon as={FaPaw} w={12} h={12} />
-            <Heading fontFamily="Bevan">P A W S </Heading>
+            <Icon as={FaPaw} w={{base:"6", md:"12"}} h={{base:"6", md:"12"}} />
+            <Heading fontFamily="Bevan" fontSize={{base:"xl", md:"4xl"}}>P A W S </Heading>
           </Box>
-          <Box d="flex" alignItems="center" gap="0.5em" fontFamily="Suez One">
+          <Box d="flex" alignItems="center" /* gap="0.5em" */ fontFamily="Suez One">
             <Button
               fontWeight="bold"
               colorScheme="yellow"
@@ -78,23 +90,10 @@ const HomePage = () => {
               onClick={() => navigate("/gallery")}
               //isLoading={loading}
               //disabled={user}
-              fontSize="lg"
+              fontSize={{base:"sm", md:"lg"}}
             >
               Sneak-Peek
             </Button>
-
-            {/* <Button
-              fontWeight="bold"
-              colorScheme="yellow"
-              width="100%"
-              //style={{ marginTop: "15px" }}
-              onClick={() => console.log("clicked--3")}
-              //isLoading={loading}
-              //disabled={user}
-              fontSize="lg"
-            >
-              Guest Login
-            </Button> */}
           </Box>
         </Box>
 
@@ -107,6 +106,7 @@ const HomePage = () => {
           border="1.5px solid black"
           boxShadow="5px 5px 5px black"
           d="flex"
+          flexDirection={{base:"column", md:"row"}}
           alignItems="center"
           justifyContent="space-between"
           gap="4em"
@@ -118,10 +118,10 @@ const HomePage = () => {
             //justifyContent="space-between"
             gap="1.6em"
           >
-            <Text fontSize="3xl" fontFamily="Suez One">
+            <Text fontSize={{base:"2xl", md:"3xl"}} fontFamily="Suez One">
               Your pet 😻 can't swipe <br /> but it has you 🐶.
             </Text>
-            <Text fontSize="md" fontFamily="Suez One" color="gray.300">
+            <Text fontSize={{base:"sm", md:"md"}} fontFamily="Suez One" color="gray.300">
               A Pawwfect match 💘 is a Purrfect profile away.
             </Text>
 
@@ -158,8 +158,8 @@ const HomePage = () => {
             src={CoverImage}
             alt="Cats & Dogs"
             objectFit="cover"
-            height="210px"
-            width="380px"
+            height={{base:'160px', md:'210px'}}
+            width={{base:'285px', md:'380px'}}
           />
         </Box>
       </Box>

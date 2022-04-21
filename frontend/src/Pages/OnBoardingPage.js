@@ -14,7 +14,7 @@ import {
   Checkbox,
   Image,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPaw } from "react-icons/fa";
 import "./OnBoardingPage.css";
 //import { ArrowForwardIcon } from "@chakra-ui/icons";
@@ -40,7 +40,7 @@ const OnBoardingPage = () => {
   const [about, setAbout] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [species, setSpecies] = useState("cat");
-  const [speciesInterest, setSpeciesInterest] = useState("cats");
+  const [speciesInterest, setSpeciesInterest] = useState("cat");
   const [gender, setGender] = useState("female");
   const [matches, setMatches] = useState([]);
 
@@ -115,15 +115,14 @@ const OnBoardingPage = () => {
       );
       console.log(response.data);
 
+      localStorage.setItem("pawsUserDetails", JSON.stringify( response.data.userDetails));
+
       setCookie('Email', response.data.email);
       setCookie('UserId', response.data.userId);
       setCookie('AuthToken', response.data.token);
       //setCookie('UserDetails', response.data.userDetails);
 
-      setLoading(false);
-      const success = response.status === 201;
-      if(success) navigate("/dashboard");
-
+      
       toast({
         title: "Registration Successful",
         status: "success",
@@ -132,6 +131,11 @@ const OnBoardingPage = () => {
         position: "bottom",
       });
 
+      setLoading(false);
+      const success = response.status === 201;
+      if(success) navigate("/dashboard");
+
+      window.location.reload();
     } catch (error) {
       console.log(error.message);
       toast({
@@ -146,12 +150,18 @@ const OnBoardingPage = () => {
     }
   };
 
+  useEffect(() => {
+    const pawsUserDetails = JSON.parse(localStorage.getItem("pawsUserDetails"));
+
+    if (pawsUserDetails /* || authToken */) navigate("/dashboard");
+  }, [navigate]);
+
   return (
     <div className="back">
       <Box
         d="flex"
         flexDir="column"
-        width="95%"
+        width="97.5%"
         //bg="white"
         gap="1em"
         margin="1.4em auto"
@@ -162,7 +172,7 @@ const OnBoardingPage = () => {
           alignItems="center"
           justifyContent="space-between"
           //gap="4em"
-          px={6}
+          px={{base:2, md:6}}
           py={2.5}
           borderRadius="7px"
           border="1.5px solid black"
@@ -172,19 +182,21 @@ const OnBoardingPage = () => {
           <Box
             d="flex"
             alignItems="center"
-            gap="1em"
+            gap={{base:"0.25em", md:"1em"}}
             textAlign="left"
             bg="red.600"
             py={1.5}
-            px={3}
+            px={{base:1, md:2.5, lg:4}}
             color="yellow.400"
             borderRadius="7px"
             _hover={{ transform: "scale(1.02)" }}
             cursor="pointer"
             onClick={() => navigate("/")}
           >
-            <Icon as={FaPaw} w={10} h={10} />
-            <Heading fontFamily="Bevan" fontSize="4xl">
+            <Icon as={FaPaw} w={{base:"6", md:"8", lg:"12"}} h={{base:"6", md:"8", lg:"12"}}
+              
+            />
+            <Heading fontFamily="Bevan" d={{ base: "none", sm: "flex" }} fontSize={{base:"lg",sm:"xl", md:"2xl", lg:"4xl"}}>
               P A W S{" "}
             </Heading>
           </Box>
@@ -193,8 +205,9 @@ const OnBoardingPage = () => {
             fontFamily="bungee"
             variant="solid"
             colorScheme="gray"
-            fontSize="3xl"
-            px={2.5}
+            //d={{ base: "none", md: "flex" }}
+            fontSize={{base:"sm",sm:"lg", md:"xl", lg:"3xl"}}
+            px={{base:1.5, md:2.5}}
             borderRadius="7px"
             _hover={{ background: "gray.600" }}
           >
@@ -209,7 +222,7 @@ const OnBoardingPage = () => {
             //width="100%"
             onClick={submitHandler}
             fontFamily="Suez One"
-            fontSize="3xl"
+            fontSize={{base:"sm", sm:"lg", md:"xl", lg:"3xl"}}
             isLoading={loading}
             //disabled={false}
           >
@@ -219,10 +232,11 @@ const OnBoardingPage = () => {
 
         <Box
           d="flex"
+          flexDirection={{ base: "column", md: "row" }}
           fontFamily="Suez One"
           justifyContent="space-between"
           alignItems="center"
-          px={6}
+          px={{base:2.5, md:6}}
           py={4}
           borderRadius="7px"
           border="1.5px solid black"
@@ -230,9 +244,9 @@ const OnBoardingPage = () => {
           bg="purple.900"
           color="white"
         >
-          <VStack spacing="1.7em" width="25%" alignSelf="start">
+          <VStack spacing="1.7em" width={{ base: "75%", md: "25%" }} alignSelf={{ base: "center", md: "start" }}>
             <FormControl id="firstName" isRequired>
-              <FormLabel fontSize="2xl" htmlFor="firstName" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} htmlFor="firstName" color="yellow.300">
                 Name
               </FormLabel>
               <Input
@@ -248,7 +262,7 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="email" isRequired>
-              <FormLabel fontSize="2xl" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} color="yellow.300">
                 Email Address
               </FormLabel>
               <Input
@@ -265,7 +279,7 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="password" isRequired>
-              <FormLabel fontSize="2xl" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} color="yellow.300">
                 Password
               </FormLabel>
               <InputGroup size="md">
@@ -295,7 +309,7 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl id="password" isRequired>
-              <FormLabel fontSize="2xl" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} color="yellow.300">
                 Confirm Password
               </FormLabel>
               <InputGroup size="md">
@@ -325,7 +339,7 @@ const OnBoardingPage = () => {
 
             <FormControl id="dob" isRequired fontFamily="roboto slab">
               <FormLabel
-                fontSize="2xl"
+                fontSize={{ base: "2xl", md: "xl", lg:"2xl" }}
                 color="yellow.300"
                 fontFamily="Suez One"
               >
@@ -369,9 +383,9 @@ const OnBoardingPage = () => {
             </FormControl>
           </VStack>
 
-          <VStack spacing="1.8em" width="30%" /* mt={2} */ alignSelf="start">
+          <VStack spacing="1.8em" width={{ base: "75%", md: "30%" }} mt={{base:6, md:0}} alignSelf={{ base: "center", md: "start" }}>
             <FormControl as="fieldset" isRequired>
-              <FormLabel fontSize="2xl" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} color="yellow.300">
                 I am a{" "}
               </FormLabel>
               <RadioGroup
@@ -403,7 +417,7 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl as="fieldset" isRequired>
-              <FormLabel fontSize="2xl" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} color="yellow.300">
                 Gender
               </FormLabel>
               <RadioGroup
@@ -435,32 +449,32 @@ const OnBoardingPage = () => {
             </FormControl>
 
             <FormControl as="fieldset" isRequired>
-              <FormLabel fontSize="2xl" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} color="yellow.300">
                 Show Me{" "}
               </FormLabel>
               <RadioGroup
-                defaultValue="cats"
+                defaultValue="cat"
                 onChange={setSpeciesInterest}
                 value={speciesInterest}
               >
                 <HStack spacing="1.2rem">
                   <Radio
-                    value="cats"
+                    value="cat"
                     colorScheme="yellow"
                     size="lg"
-                    id="cats"
-                    name="cats"
+                    id="cat"
+                    name="cat"
                   >
-                    Cats 😻
+                    Cats
                   </Radio>
                   <Radio
-                    value="dogs"
+                    value="dog"
                     colorScheme="yellow"
                     size="lg"
-                    id="dogs"
-                    name="dogs"
+                    id="dog"
+                    name="dog"
                   >
-                    Dogs 🐶
+                    Dogs
                   </Radio>
                   <Radio
                     value="everyone"
@@ -469,7 +483,7 @@ const OnBoardingPage = () => {
                     id="everyone"
                     name="everyone"
                   >
-                    Everyone 🐾
+                    Everyone
                   </Radio>
                 </HStack>
               </RadioGroup>
@@ -486,7 +500,7 @@ const OnBoardingPage = () => {
             </Checkbox>
 
             <FormControl id="about" isRequired>
-              <FormLabel fontSize="2xl" htmlFor="about" color="yellow.300">
+              <FormLabel fontSize={{ base: "2xl", md: "xl", lg:"2xl" }} htmlFor="about" color="yellow.300">
                 About Me
               </FormLabel>
               <Textarea
@@ -503,7 +517,7 @@ const OnBoardingPage = () => {
             </FormControl>
           </VStack>
 
-          <VStack spacing="0.4em" width="35%" /* mt={2} */ alignSelf="start">
+          <VStack spacing="0.4em" width={{ base: "75%", md: "35%" }} mt={{base:6, md:0}} alignSelf={{ base: "center", md: "start" }}>
             <FormControl id="url" isRequired>
               <FormLabel fontSize="xl" htmlFor="url" color="yellow.300">
                 Profile Picture

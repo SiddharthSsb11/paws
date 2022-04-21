@@ -19,8 +19,8 @@
     border-radius: 7px;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(7, 5vw);
-    padding: 2rem;
-    grid-gap: 1rem;
+    padding: 1.1rem;
+    grid-gap: 0.8rem;
     box-shadow: "5px 5px 5px black";
 
 }

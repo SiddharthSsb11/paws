@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import {
   Box,
   Text,
@@ -44,29 +44,38 @@ const GalleryPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const pawsUserDetails = JSON.parse(localStorage.getItem("pawsUserDetails"));
+
+    if (pawsUserDetails /* || authToken */) navigate("/dashboard");
+  }, [navigate]);
+
   return (
     <div className="back">
-      <Box d="flex" margin="2rem auto" flexDir="column" gap="1rem" width="85%">
+      <Box d="flex" margin="2rem auto" flexDir="column" gap="1rem" width={{ base: "92.5%", md: "85%" }}>
         <Box
           bg="purple.900"
           //color="black"
           fontFamily="Suez One"
           //py={1.5}
           d="flex"
-          alignItems="center"
+          flexDir={{ base: "column", md: "row" }}
+          alignItems="center" gap="0.5rem"
           justifyContent="space-between"
-          p={5}
+          p={{base:2, md:5}}
           borderRadius="7px"
           border="1.5px solid black"
           boxShadow="5px 5px 5px black"
-          _hover={{ backgroundColor: "purple.900" }}
+          //_hover={{ backgroundColor: "purple.900" }}
         >
-          <Text fontSize="3xl" color="white" textAlign="left">
+          <Text fontSize={{base:"lg", md:"3xl"}} color="white" textAlign="left">
             {" "}
-            Meet local pets 🐕 and pet lovers 🐈‍ for <br /> friendship,
+            Meet local pets 🐕 and pet lovers 🐈‍ for  friendship,
             play-dates 🦴 or fun outdoor playing 🦦.{" "}
           </Text>{" "}
-          <Box d="flex" flexDir="column" gap="0.5rem" alignItems="center">
+          <Box d="flex" flexDir={{ base: "row", md: "column" }} gap="0.5em" alignItems="center" 
+            alignSelf={{ base: "start", md: "center" }}
+          >
             <Button
               leftIcon={<ArrowBackIcon />}
               fontWeight="bold"
@@ -76,7 +85,7 @@ const GalleryPage = () => {
               onClick={() => navigate("/")}
               //isLoading={loading}
               //disabled={user}
-              fontSize="xl"
+              fontSize={{base:"sm", md:"xl"}}
             >
               Go Back
             </Button>
@@ -93,7 +102,7 @@ const GalleryPage = () => {
                 }}
                 //isLoading={loading}
                 //disabled={user}
-                fontSize="xl"
+                fontSize={{base:"sm", md:"xl"}}
               >
                 Dive In
               </Button>
