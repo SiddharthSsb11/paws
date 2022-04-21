@@ -178,7 +178,8 @@ const ChatContainer = () => {
           gap="1em"
           bg="purple.900"
           height="42rem"
-          width="26.5%"
+          //width="26.5%"
+          width = {{ base: "85%", md: "60%", xl: "26.5%" }}
           //color="white"
           borderRadius="7px"
           border="1.5px solid black"
@@ -456,7 +457,7 @@ const ChatContainer = () => {
           //justifyContent="space-around"
           bg="purple.900"
           height="42rem"
-          width="25%"
+          width= {{ base: "85%", md: "60%", xl: "26.5%" }}
           gap="3em"
           //color="white"
           borderRadius="7px"

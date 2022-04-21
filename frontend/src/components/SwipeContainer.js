@@ -1,66 +1,52 @@
-import React, { useState } from "react";
-import { Badge, Box, Text } from "@chakra-ui/react";
+import React, { useState, useContext } from "react";
+import { Badge, Box, Text,  useDisclosure } from "@chakra-ui/react";
 import TinderCard from "react-tinder-card";
 import { Icon } from "@chakra-ui/react";
-
 import "./SwipeContainer.css";
 import { MdSwipe } from "react-icons/md";
 import { FaInfoCircle, FaPaw } from "react-icons/fa";
-
 import { IoFemaleSharp, IoMaleSharp } from "react-icons/io5";
 import { GiBrokenHeartZone, GiPiercedHeart } from "react-icons/gi";
 import "./ChatContainer.css";
-
-/* const prefUsers = [
-  {
-    gender: "Female",
-    genderShow: true,
-    age: 4,
-    name: "Ruby",
-    url: "https://www.rd.com/wp-content/uploads/2019/09/amazing-portrait-of-young-crossbreed-dog-german-shepherd-during-sunset-in-grass-e1576859426599-scaled.jpg?resize=700,466",
-  },
-  {
-    gender: "Male",
-    genderShow: false,
-    age: 12,
-    name: "Erlich",
-    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
-  },
-  {
-    gender: "Male",
-    genderShow: true,
-    age: 11,
-    name: "Monica",
-    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
-  },
-  {
-    gender: "Female",
-    genderShow: true,
-    age: 10,
-    name: "Jared",
-    url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/medium-sized-dogs-1613083812.jpg?crop=0.668xw:1.00xh;0.0369xw,0&resize=640:*",
-  },
-  {
-    gender: "Female",
-    genderShow: false,
-    age: 5,
-    name: "Shelly",
-    url: "https://www.rd.com/wp-content/uploads/2019/09/amazing-portrait-of-young-crossbreed-dog-german-shepherd-during-sunset-in-grass-e1576859426599-scaled.jpg?resize=700,466",
-  },
-]; */
+import PawsContext from "../Context/paws-context";
+import { useToast } from "@chakra-ui/toast";
 
 const SwipeContainer = ({prefUsers}) => {
+
   const [lastDirection, setLastDirection] = useState();
 
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete);
+  const {updateMatches} = useContext(PawsContext);
+  const toast = useToast();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const swiped = (direction, swipedUserId, name) => {
+    //console.log("removing: " + nameToDelete);
+    if(direction === 'right'){
+      updateMatches(swipedUserId);
+      toast({
+        title: `Right Swiped 💝 ${name}`,
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }else{
+      toast({
+        title: `Left Swiped 💔 ${name}`,
+        status: "info",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+      
+    }
     setLastDirection(direction);
   };
 
-  console.log(lastDirection);
-
   const outOfFrame = (name) => {
     console.log(name + " left the screen!");
+   // console.log("prefUsers swipercontainer",prefUsers)
   };
 
   return (
@@ -70,7 +56,8 @@ const SwipeContainer = ({prefUsers}) => {
       gap="0.7rem"
       bg="purple.900"
       height="42rem"
-      width="42.5%"
+      //width="40.5%"
+      width={{ base: "95%", sm:"95%", md: "60%", xl: "40.5%" }}
       //color="white"
       borderRadius="7px"
       border="1.5px solid black"
@@ -92,7 +79,7 @@ const SwipeContainer = ({prefUsers}) => {
           //bg="gray.800"
           bg="black"
           color="red.600"
-          fontSize="4xl"
+          fontSize={{ base: "xl", sm:"2xl", md: "3xl", xl: "4xl" }}
           px={4}
           py={1.5}
           borderRadius="7px"
@@ -116,32 +103,35 @@ const SwipeContainer = ({prefUsers}) => {
         d="flex"
         //flexDir="column"
         alignItems="center"
-        justifyContent="space-between"
+        //justifyContent="space-between"
+        justifyContent="center"
         gap="1rem"
         //bg="green.200"
         px={4}
       >
-        <Icon
+        {/* <Icon
           className="animate"
           color="red.500"
           fontSize="2.7rem"
           as={GiBrokenHeartZone}
           _hover={{ color: "red.600" }}
-        />
+        /> */}
         <Box className="cardContainer">
           {prefUsers.map((prefUser) => (
             <TinderCard
               color="white"
               className="swipe"
               key={prefUser.name}
-              onSwipe={(dir) => swiped(dir, prefUser.name)}
+              onSwipe={(dir) => swiped(dir, prefUser.user_id, prefUser.name)}
               onCardLeftScreen={() => outOfFrame(prefUser.name)}
             >
               <Box
                 style={{ backgroundImage: "url(" + prefUser.url + ")" }}
-                className="card"
-                d="flex"
+                className="card" 
+                d="flex" 
+                //ml={2}
                 justifyContent="center"
+                width = {{base:"21rem", sm:"26rem", md:"27rem"}}
               >
                 <Box
                   //bg="red.600"  color="white"
@@ -198,13 +188,13 @@ const SwipeContainer = ({prefUsers}) => {
             </TinderCard>
           ))}
         </Box>
-        <Icon
+        {/* <Icon
           className="animate"
           color="red.500"
           fontSize="3rem"
           as={GiPiercedHeart}
           _hover={{ color: "red.600" }}
-        />
+        /> */}
       </Box>
     </Box>
   );

@@ -15,11 +15,13 @@ const Alerts = () => {
   //const { user } = useContext(PawsContext);
   const navigate = useNavigate();
 
- /*  const alertHandler = () => {
+  const alertHandler = () => {
     
-      navigate("/")
-    }
-  } */
+    localStorage.removeItem("pawsUserDetails");
+    //window.location.reload();
+    navigate("/");
+  }
+  
 
   return (
     <Container maxW="xl" centerContent margin="auto">
@@ -65,11 +67,11 @@ const Alerts = () => {
           mt={1}
           p={1.5}
           borderColor="black"
-          onClick={() => navigate("/")}
+          onClick={alertHandler}
           _hover={{ background: "yellow.300", color: "black" }}
           _active={{ background: "yellow.300", color: "black" }}
         >
-          Please Login/Signup first.
+          Please try Login/Signup again.
         </Button>
       </Alert>
     </Container>

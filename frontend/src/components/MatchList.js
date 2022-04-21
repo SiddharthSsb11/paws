@@ -42,9 +42,13 @@ const MatchList = ({matches}) => {
 
   //console.log(matchedProfiles);
 
+  /* const filteredMatchedProfiles = matchedProfiles?.filter( matchedProfile => matchedProfile.matches.filter(
+    profile => profile.user_id === user.user_id
+  )); */
 
   const deleteHandler = (id, name) => {
     console.log("delete clicked", id);
+    setSelectedMatch(false)
     deleteMatch(id);
 
     toast({
@@ -71,7 +75,7 @@ const MatchList = ({matches}) => {
       width="100%"
       borderRadius="7px"
     >
-      {matchedProfiles?.map((matchedProfile) => (
+      {/*filteredMatchedProfiles*/matchedProfiles?.map((matchedProfile) => (
         <ListItem
           key={matchedProfile.user_id}//matchedProfile.user_id
           d="flex"
@@ -127,7 +131,7 @@ const MatchList = ({matches}) => {
               aria-label="Delete Transaction"
               icon={<RiMessage2Fill />}
               mr={2}
-              onClick={() => setSelectedMatch(true)} //setSelectedMatch(match)
+              onClick={() => setSelectedMatch(matchedProfile)} //setSelectedMatch(match)
             />
             <IconButton
               variant="ghost"

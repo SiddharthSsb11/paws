@@ -23,12 +23,15 @@ import { BiBone } from "react-icons/bi";
 import { useToast } from "@chakra-ui/toast";
 import { useNavigate } from "react-router-dom";
 import { GiDogBowl, GiDogHouse } from "react-icons/gi";
+import axios from "axios";
+import {useCookies} from "react-cookie"
 
 const AuthModal = ({ children, overlay }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   const initialRef = useRef();
   const navigate = useNavigate();
@@ -53,8 +56,49 @@ const AuthModal = ({ children, overlay }) => {
       return;
     }
 
-    setLoading(false);
-    navigate("/dashboard");
+    try {
+      /* const config = {
+        headers: { "Content-type": "application/json" },
+      }; */
+
+      const response = await axios.post( "http://127.0.0.1:5000/login", { email, password }, /*config*/);
+
+      console.log("data from server on login", response.data);
+
+      setCookie('Email', response.data.email);
+      setCookie('UserId', response.data.userId);
+      setCookie('AuthToken', response.data.token);
+
+      //setCookie('UserDetails', response.data.userDetails);  
+      // console.log(JSON.stringify(data));
+      toast({
+        title: "Login Successful",
+        status: "success",
+        duration: 5000, 
+        isClosable: true,
+        position: "bottom",
+      });
+
+      localStorage.setItem("pawsUserDetails", JSON.stringify( response.data.userDetails));
+
+      setLoading(false);
+      const success = response.status === 201;
+      if(success) navigate("/dashboard");
+      window.location.reload();
+
+    } catch (error) {
+
+      toast({
+        title: "Error Occured!",
+        //description: error.response.data.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+    }
+
   };
 
   return (
@@ -214,7 +258,7 @@ const AuthModal = ({ children, overlay }) => {
                   fontSize="2xl"
                   p={1}
                   borderRadius="7px"
-                  mr={3}
+                  mr={3.5}
                 >
                   <Icon as={GiDogHouse} />
                 </Square>

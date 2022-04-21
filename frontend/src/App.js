@@ -5,8 +5,13 @@ import HomePage from "./Pages/HomePage";
 import DashboardPage from "./Pages/DashboardPage";
 import OnBoardingPage from "./Pages/OnBoardingPage";
 import GalleryPage from "./Pages/GalleryPage";
+//import { useCookies } from "react-cookie";
+
 
 function App() {
+  /* const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const authToken = cookies.AuthToken; */
+
   return (
     <div >
       <Routes>

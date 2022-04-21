@@ -34,7 +34,8 @@ const MatchContainer = (props) => {
       gap="1em"
       bg="purple.900"
       height="42rem"
-      width="24%"
+      //width="23%"
+      width={{ base: "85%", md: "60%", xl: "23%" }}
       //color="white"
       borderRadius="7px"
       border="1.5px solid black"
@@ -54,8 +55,8 @@ const MatchContainer = (props) => {
           d="flex"
           alignItems="center"
           //justifyContent="space-between"
-          flexDir={{ base: "column", md: "row" }}
-          gap="0.5rem"
+          //flexDir={{ base: "column", md: "row" }}
+          gap="0.7rem"
           px={2}
         >
           <Avatar
@@ -73,7 +74,7 @@ const MatchContainer = (props) => {
             d="flex"
             flexDir="column"
             alignItems="start"
-            justifyContent="space-between"
+            justifyContent="space-around"
             gap="0.6rem"
             textAlign="left"
           >
@@ -82,8 +83,8 @@ const MatchContainer = (props) => {
               variant="solid"
               bg="black"
               color="red.600"
-              fontSize="2xl"
-              px={2}
+              fontSize="3xl"
+              px={2.5}
               borderRadius="7px"
               letterSpacing="1.75px"
               _hover={{ background: "red.600", color: "white" }}
@@ -92,7 +93,7 @@ const MatchContainer = (props) => {
               {user.name}
             </Badge>
 
-            <Text
+            {/* <Text
               color="gray.800"
               fontFamily="suez one"
               fontSize="sm"
@@ -101,12 +102,12 @@ const MatchContainer = (props) => {
               marginLeft="2px"
             >
               <u>Matches: {user.matches.length}</u>
-            </Text>
+            </Text> */}
           </Box>
         </Box>
 
         <Box d="flex" flexDir="column" gap="0.2rem" alignItems="center" px={2}>
-          <IconButton
+          {/* <IconButton
             variant="ghost"
             //bg="gray.700"
             color="gray.800"
@@ -117,15 +118,15 @@ const MatchContainer = (props) => {
             aria-label="Settings"
             icon={<MdSettings />}
             onClick={() => console.log("settings profile modal")}
-          />
+          /> */}
 
           <IconButton
             variant="ghost"
             //bg="gray.700"
             color="gray.800"
-            size="sm"
+            size="md"
             textAlign="center"
-            fontSize="3xl"
+            fontSize="4xl"
             fontWeight="bold"
             _hover={{ backgroundColor: "black", color: "red.600" }}
             aria-label="Logout"
@@ -137,7 +138,7 @@ const MatchContainer = (props) => {
 
       <Box d="flex" flexDir="column" alignItems="center" gap="1.2rem">
         {user.matches.length === 0 ? (
-          <Box marginTop="1.8rem"
+          <Box marginTop="1.55rem"
             bg="yellow.300"
             height="14rem"
             width="90%"
@@ -175,7 +176,7 @@ const MatchContainer = (props) => {
               px={1.5}
               letterSpacing="1.25px"
             >
-              Matches
+              Matches: {user.matches.length}
             </Badge>
 
             <Box
