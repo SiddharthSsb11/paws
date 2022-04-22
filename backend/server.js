@@ -330,10 +330,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //Unknow route error handling
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
   throw error;
 });
+
 
 app.use((error, req, res) => {
   /* if (res.headerSent) {
@@ -343,9 +344,9 @@ app.use((error, req, res) => {
   //an error while streaming the response to a client
   //Then, you forward the error encountered to the default express error handler that will handle it for you
 
-  res.status(error.code || 500);
-  res.json({ message: error.message || "An unknown error occurred!" });
-});
+  //res.status(error.code || 500);
+  //res.json({ message: error.message || "An unknown error occurred!" });
+//}); */
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log("Server started on PORT 5000"));
