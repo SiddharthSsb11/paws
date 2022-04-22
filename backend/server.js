@@ -1,7 +1,7 @@
+const path = require("path");
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const uri =
-  "mongodb+srv://sidssb11:merndating@cluster0.pzobw.mongodb.net/datingDB?retryWrites=true&w=majority";
+const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
@@ -9,10 +9,11 @@ const { v4: uuidv4 } = require("uuid");
 const HttpError = require("./http-error");
 
 //const { application } = require("express");
-
+dotenv.config();
+const uri = process.env.URI;
 const app = express();
 app.use(cors());
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.use(express.json()); // to accept json data from req body sent from fe
 
 //CORS
@@ -28,7 +29,7 @@ app.use(express.json()); // to accept json data from req body sent from fe
   );
 
   next();
-});  */ ////
+});  */ 
 
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
@@ -114,6 +115,8 @@ app.post("/signup", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }finally {
+    await client.close();
   }
 });
 
@@ -146,6 +149,8 @@ app.post("/login", async (req, res, next) => {
       new HttpError("Logging in failed, please try again later.", 500)
     ); */
     console.log(err);
+  }finally {
+    await client.close();
   }
 });
 
@@ -187,6 +192,7 @@ app.get("/preferredUsers", async (req, res) => {
     await client.close();
   }
 });
+
 
 //ADDING A MATCH
 app.put("/addmatch", async (req, res) => {
@@ -231,7 +237,7 @@ app.put("/deletematch", async (req, res) => {
     const updateDocument = { $pull: { matches: { user_id: deleteMatchId } } };
     const user = await users.updateOne(query, updateDocument);
     const updatedUser = await users.findOne(query);
-    console.log("match removed", updatedUser);
+    //console.log("match removed", updatedUser);
 
     res.send(updatedUser);
   } finally {
@@ -244,7 +250,6 @@ app.get("/matchedusers", async (req, res) => {
   const client = new MongoClient(uri);
   const matchedUsersIds = JSON.parse(req.query.matchedUsersIds);
   //console.log(matchedUsersIds);
-
   try {
     await client.connect();
     const database = client.db("datingDB");
@@ -307,6 +312,22 @@ app.post("/message", async (req, res) => {
     await client.close();
   }
 });
+
+
+///deployment
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"))
+  );
+
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
 
 //Unknow route error handling
 app.use((req, res, next) => {
