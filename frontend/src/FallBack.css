@@ -1,0 +1,7 @@
+.back {
+    min-height: 100vh;
+    display: flex;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.40)), url(./back.png);
+    background-position: center;
+    background-size: cover;
+}
