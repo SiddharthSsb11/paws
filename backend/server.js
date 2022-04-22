@@ -347,4 +347,4 @@ app.use((error, req, res) => {
   res.json({ message: error.message || "An unknown error occurred!" });
 });
 
-app.listen(PORT, () => console.log("Server started on PORT 5000"));
+app.listen(PORT, console.log("Server started on PORT 5000"));
