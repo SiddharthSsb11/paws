@@ -44,7 +44,7 @@ const OnBoardingPage = () => {
   const [gender, setGender] = useState("female");
   const [matches, setMatches] = useState([]);
 
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const [setCookie] = useCookies(['user']);
 
   const navigate = useNavigate();
   const toast = useToast();

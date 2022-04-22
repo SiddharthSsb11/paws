@@ -1,6 +1,8 @@
 import { SettingsIcon } from "@chakra-ui/icons";
-import { Avatar, Badge, Box, IconButton, Text } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import { Avatar, Badge, Box, IconButton, Text, useDisclosure, } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/toast";
+
+import React, { useContext, useState } from "react";
 import { MdSettings } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +12,13 @@ import PawsContext from "../Context/paws-context";
 
 const MatchContainer = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  //const [matchedProfilesList, setMatchedProfilesList] = useState(null);
   const navigate = useNavigate();
 
   //const authToken = cookies.authToken;
+  const toast = useToast();
 
+  //const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useContext(PawsContext);
 
   const logoutHandler = () => {
@@ -24,6 +29,13 @@ const MatchContainer = (props) => {
 
     localStorage.removeItem("pawsUserDetails");
     //window.location.reload();
+    toast({
+      title: "Log Out Successful",
+      status: "success",
+      duration: 5000, 
+      isClosable: true,
+      position: "bottom",
+    });
     navigate("/");
   };
 
@@ -135,58 +147,57 @@ const MatchContainer = (props) => {
           />
         </Box>
       </Box>
-
       <Box d="flex" flexDir="column" alignItems="center" gap="1.2rem">
-        {user.matches.length === 0 ? (
-          <Box marginTop="1.55rem"
-            bg="yellow.300"
-            height="14rem"
-            width="90%"
+      {user.matches.length === 0 ? (
+        <Box marginTop="1.55rem"
+          bg="yellow.300"
+          height="14rem"
+          width="90%"
+          borderRadius="7px"
+          border="1.5px solid black"
+          d="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Badge
+            fontFamily="suez one"
+            variant="solid"
+            bg="red.600"
+            color="white"
+            fontSize="2xl"
+            px={3}
+            py={1}
             borderRadius="7px"
-            border="1.5px solid black"
-            d="flex"
-            justifyContent="center"
-            alignItems="center"
+            letterSpacing="1.75px"
+            //_hover={{ background: "red.600", color: "white" }}
+            _hover={{ backgroundColor: "black", color: "red.600" }}
+            textAlign="center"
           >
-            <Badge
-              fontFamily="suez one"
-              variant="solid"
-              bg="red.600"
-              color="white"
-              fontSize="2xl"
-              px={3}
-              py={1}
-              borderRadius="7px"
-              letterSpacing="1.75px"
-              //_hover={{ background: "red.600", color: "white" }}
-              _hover={{ backgroundColor: "black", color: "red.600" }}
-              textAlign="center"
-            >
-              Swipe/drag right
-              <br />to have a match
-            </Badge>
-          </Box>
-        ) : (
-          <>
-            <Badge
-              variant="outline"
-              colorScheme="yellow"
-              fontSize="xl"
-              fontFamily="bungee"
-              px={1.5}
-              letterSpacing="1.25px"
-            >
-              Matches: {user.matches.length}
-            </Badge>
+            Swipe/drag right
+            <br />to have a match
+          </Badge>
+        </Box>
+      ) : (
+        <>
+          <Badge
+            variant="outline"
+            colorScheme="yellow"
+            fontSize="xl"
+            fontFamily="bungee"
+            px={1.5}
+            letterSpacing="1.25px"
+          >
+            Matches
+          </Badge>
 
-            <Box
-              width="100%"
-              //bg="yellow.300"
-            >
-              {user?.matches && <MatchList matches={user.matches} />}
-            </Box>
-          </>
-        )}
+          <Box
+            width="100%"
+            //bg="yellow.300"
+          >
+            {user?.matches && <MatchList matches={user.matches} />}
+          </Box>
+        </>
+      )}
       </Box>
     </Box>
   );

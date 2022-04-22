@@ -23,7 +23,7 @@ const HomePage = () => {
   const [overlay, setOverlay] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
-  const authToken = cookies.AuthToken;
+  //const authToken = cookies.AuthToken;
   const navigate = useNavigate();
 
 

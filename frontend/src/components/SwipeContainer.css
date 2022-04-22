@@ -4,7 +4,7 @@
 }
 
 .cardContainer {
-    width: 28.5rem;
+    width: 27.5rem;
     /* max-width: 260px; */
     height: 32rem;
 } 
@@ -12,7 +12,7 @@
 .card {
     /* position: relative; */
     background-color: #fff;
-    width: 27rem;
+   /*  width: 27rem; */
     /* max-width: 260px; */
     height: 32rem;
     /*box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.30);*/

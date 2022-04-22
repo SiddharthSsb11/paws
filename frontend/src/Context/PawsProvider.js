@@ -9,6 +9,7 @@ const PawsProvider = (props) => {
   const [selectedMatch, setSelectedMatch] = useState(false);
   const [chats, setChats] = useState([]);
   const [fetchedUser, setFetchedUser] = useState(null)
+  //const [finalMatchedProfiles, setFinalMatchedProfiles] = useState([]); 
   //const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
  // const userId = cookies.UserId;
@@ -76,9 +77,9 @@ const PawsProvider = (props) => {
     }
   }
 
-  console.log("localstorage user context", user);
+  //console.log("localstorage user context", user);
   //console.log("fetched user context out", fetchedUser);
-
+  //console.log('finalMatchedProfiles', finalMatchedProfiles);
   return (
     <React.Fragment>
       <PawsContext.Provider
@@ -91,6 +92,7 @@ const PawsProvider = (props) => {
           setChats,
           updateMatches,
           deleteMatch,
+          
         }}
       >
         {props.children}

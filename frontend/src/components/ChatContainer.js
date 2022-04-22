@@ -128,9 +128,9 @@ const ChatContainer = () => {
     messages.push(formattedMessage);  
   });
 
-  console.log (" usersMessages ", usersMessages);
-  console.log("selected match messages", selectedMatchMessages);
-  console.log('messages in inbox', messages);
+  //console.log (" usersMessages ", usersMessages);
+  ///console.log("selected match messages", selectedMatchMessages);
+  //console.log('messages in inbox', messages);
   const inOrderMessages = messages?.sort((a,b) => a.timestamp.localeCompare(b.timestamp));
 
   const sendMessage = async (event) => {

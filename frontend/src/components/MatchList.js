@@ -1,54 +1,46 @@
 import React, { useContext, useEffect, useState } from "react";
-import { List, ListItem, IconButton, Avatar, Badge, useDisclosure } from "@chakra-ui/react";
+import {
+  List,
+  ListItem,
+  IconButton,
+  Avatar,
+  Badge,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/toast";
 import { useNavigate } from "react-router-dom";
 import { Box, Text } from "@chakra-ui/layout";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { AiFillMessage } from "react-icons/ai";
-import {RiMessage2Fill} from "react-icons/ri";
+import { RiMessage2Fill } from "react-icons/ri";
 import PawsContext from "../Context/paws-context";
 import axios from "axios";
 
-
-const MatchList = ({matches}) => {
-
+const MatchList = ({ matches, /* finalMatchedUsers */ }) => {
   const [matchedProfiles, setMatchedProfiles] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { user, selectedMatch, setSelectedMatch, deleteMatch } = useContext(PawsContext);
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const matchedUsersIds = matches?.map(({user_id})=>user_id);
-  
+  const matchedUsersIds = matches?.map(({ user_id }) => user_id);
+
   const getMatchedProfile = async () => {
-    try{
-      const response = await axios.get('http://127.0.0.1:5000/matchedusers',{
-        params: {matchedUsersIds: JSON.stringify(matchedUsersIds)}
-      })
+    try {
+      const response = await axios.get("http://127.0.0.1:5000/matchedusers", {
+        params: { matchedUsersIds: JSON.stringify(matchedUsersIds) },
+      });
 
       //console.log(response.data);
       setMatchedProfiles(response.data);
-
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
-  }
-
-  //console.log(matches);
-
-  useEffect(()=>{
-    getMatchedProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matches]);
-
-  //console.log(matchedProfiles);
-
-  /* const filteredMatchedProfiles = matchedProfiles?.filter( matchedProfile => matchedProfile.matches.filter(
-    profile => profile.user_id === user.user_id
-  )); */
+  };
 
   const deleteHandler = (id, name) => {
     console.log("delete clicked", id);
-    setSelectedMatch(false)
+    setSelectedMatch(false);
     deleteMatch(id);
 
     toast({
@@ -59,8 +51,25 @@ const MatchList = ({matches}) => {
       position: "bottom-left",
     });
   };
+  
+  useEffect(() => {
+    getMatchedProfile();
+    //finalMatchedUsers(filteredMatchedProfiles);
+    /* setFinalMatchedProfiles(filteredMatchedProfiles); */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matches]);
+
+  const filteredMatchedProfiles = matchedProfiles?.filter(
+    (matchedProfile) =>
+      matchedProfile.matches.filter(
+        (profile) => profile.user_id == user.user_id
+      ).length > 0
+  ); 
+  //console.log("final matched profiles", filteredMatchedProfiles);
 
   return (
+
+    
     <List
       d="flex"
       flexDir="column"
@@ -75,9 +84,9 @@ const MatchList = ({matches}) => {
       width="100%"
       borderRadius="7px"
     >
-      {/*filteredMatchedProfiles*/matchedProfiles?.map((matchedProfile) => (
+      {filteredMatchedProfiles?.map((matchedProfile) => (
         <ListItem
-          key={matchedProfile.user_id}//matchedProfile.user_id
+          key={matchedProfile.user_id} //matchedProfile.user_id
           d="flex"
           alignItems="center"
           justifyContent="space-between"
@@ -142,7 +151,11 @@ const MatchList = ({matches}) => {
               _hover={{ background: "black", color: "red.600" }}
               aria-label="Delete Transaction"
               icon={<DeleteIcon />}
-              onClick={deleteHandler.bind(null, matchedProfile.user_id, matchedProfile.name)}
+              onClick={deleteHandler.bind(
+                null,
+                matchedProfile.user_id,
+                matchedProfile.name
+              )}
             />
           </Box>
         </ListItem>

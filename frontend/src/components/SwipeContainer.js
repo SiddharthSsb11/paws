@@ -15,26 +15,35 @@ const SwipeContainer = ({prefUsers}) => {
 
   const [lastDirection, setLastDirection] = useState();
 
-  const {updateMatches} = useContext(PawsContext);
+  const {user, updateMatches} = useContext(PawsContext);
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const swiped = (direction, swipedUserId, name) => {
+  const swiped = (direction, swipedUser, swipedUserId, name) => {
     //console.log("removing: " + nameToDelete);
     if(direction === 'right'){
       updateMatches(swipedUserId);
       toast({
-        title: `Right Swiped 💝 ${name}`,
-        status: "info",
+        title: `Right Swiped 💝 ${name}.`,
+        status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom-left",
       });
+      if(swipedUser.matches.includes(user.user_id)){
+        toast({
+          title: `Yayy !! Matched 💞 with ${name}`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+        })
+      }
     }else{
       toast({
-        title: `Left Swiped 💔 ${name}`,
-        status: "info",
+        title: `Left Swiped 🖤 ${name}`,
+        status: "warning",
         duration: 2000,
         isClosable: true,
         position: "bottom-left",
@@ -116,20 +125,21 @@ const SwipeContainer = ({prefUsers}) => {
           as={GiBrokenHeartZone}
           _hover={{ color: "red.600" }}
         /> */}
+        {/* user.matches.length === prefUsers.length ? "all caught up" : 'show cards' */}
         <Box className="cardContainer">
           {prefUsers.map((prefUser) => (
             <TinderCard
               color="white"
               className="swipe"
               key={prefUser.name}
-              onSwipe={(dir) => swiped(dir, prefUser.user_id, prefUser.name)}
+              onSwipe={(dir) => swiped(dir, prefUser, prefUser.user_id, prefUser.name)}
               onCardLeftScreen={() => outOfFrame(prefUser.name)}
             >
               <Box
                 style={{ backgroundImage: "url(" + prefUser.url + ")" }}
                 className="card" 
                 d="flex" 
-                //ml={2}
+                ml={{base:3.75, sm:2}}
                 justifyContent="center"
                 width = {{base:"21rem", sm:"26rem", md:"27rem"}}
               >

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { Suspense } from "react";
+import React, { /* Suspense  */} from "react";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import DashboardPage from "./Pages/DashboardPage";
