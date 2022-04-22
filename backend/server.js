@@ -3,7 +3,7 @@ const express = require("express");
 const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
+//const cors = require("cors");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const HttpError = require("./http-error");
@@ -12,9 +12,9 @@ const HttpError = require("./http-error");
 dotenv.config();
 const uri = process.env.URI;
 const app = express();
-app.use(cors());
-const PORT = process.env.PORT || 5000;
+//app.use(cors());
 app.use(express.json()); // to accept json data from req body sent from fe
+//const PORT = process.env.PORT || 5000;
 
 //CORS
 /* app.use((req, res, next) => {
@@ -347,4 +347,5 @@ app.use((error, req, res) => {
   res.json({ message: error.message || "An unknown error occurred!" });
 });
 
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log("Server started on PORT 5000"));

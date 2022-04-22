@@ -58,7 +58,7 @@ const ChatContainer = () => {
     setLoading(true);
     try{
 
-      const response = await axios.get("http://127.0.0.1:5000/messages" , {
+      const response = await axios.get("/messages" , {
         params: {userId: user?.user_id, correspondingUserId: selectedMatch?.user_id }
       });
 
@@ -83,7 +83,7 @@ const ChatContainer = () => {
     if (!selectedMatch) return;
     setLoading(true);
     try{
-      const response = await axios.get('http://127.0.0.1:5000/messages', {
+      const response = await axios.get('/messages', {
         params: {userId: selectedMatch?.user_id, correspondingUserId: user?.user_id}
       });
       //console.log('selectedMatch messages from server', response.data);
@@ -142,7 +142,7 @@ const ChatContainer = () => {
         message: newMessage,
       };
       try {
-        await axios.post("http://127.0.0.1:5000/message", { message });
+        await axios.post("/message", { message });
         setNewMessage("");
         //console.log("meeage sent server response",response.data)
         getUsersMessages();

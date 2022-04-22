@@ -28,7 +28,7 @@ const PawsProvider = (props) => {
   
   const getUser = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:5000/user", {
+      const response = await axios.get("/user", {
         params: {userId: user?.user_id}
       });
       //console.log("user loaded from server on dashboard",response.data)
@@ -48,7 +48,7 @@ const PawsProvider = (props) => {
 
     try{
       //config
-      const response = await axios.put("http://127.0.0.1:5000/addmatch", { userId:user?.user_id, matchedUserId});
+      const response = await axios.put("/addmatch", { userId:user?.user_id, matchedUserId});
       //sending logged in userid and matcheduser id in body
       //console.log("response data from server on  a right swipe context",response.data);
       //setUser(response.data);
@@ -65,7 +65,7 @@ const PawsProvider = (props) => {
     
     try{
       //config
-      const response = await axios.put("http://127.0.0.1:5000/deletematch", { userId:user?.user_id, deleteMatchId});
+      const response = await axios.put("/deletematch", { userId:user?.user_id, deleteMatchId});
       console.log("response data from server on deleting a match",response.data);
       //setUser(response.data);
       getUser();

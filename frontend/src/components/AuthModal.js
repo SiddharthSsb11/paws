@@ -61,7 +61,7 @@ const AuthModal = ({ children, overlay }) => {
         headers: { "Content-type": "application/json" },
       }; */
 
-      const response = await axios.post( "http://127.0.0.1:5000/login", { email, password }, /*config*/);
+      const response = await axios.post( "/login", { email, password }, /*config*/);
 
       console.log("data from server on login", response.data);
 
