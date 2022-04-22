@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.5.0",
     "nodemon": "^2.0.15",
+    "path-browserify": "^1.0.1",
     "uuid": "^8.3.2"
   }
 }

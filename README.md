@@ -35,7 +35,7 @@ Responsiveness aspect of this application is still incomplete.
 - Latest features of JavaScript i.e. ES6, ES7, ES8 is used
 - [React JS Hooks](https://reactjs.org/docs/hooks-intro.html) are used with Functional components
 - ES8 `async/await` is used
-
+- [React Error Boundaries](https://reactjs.org/docs/error-boundaries.html) and [Code Splitting](https://reactjs.org/docs/code-splitting.html) is used for enhancing application performance.
 <br/>
 
 <ul>
@@ -56,4 +56,5 @@ Responsiveness aspect of this application is still incomplete.
  <li> Send messages and have a chat with matched up pets. </li>
  <li> If not sure about your decision, remove the matched up pets. </li>
  <li> All the conversation are stored. matches and onformation in the database i.e. <i>persistant</i>
+ 
 </ul>
