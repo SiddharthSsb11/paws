@@ -14,7 +14,7 @@ const PawsProvider = (props) => {
 
  // const userId = cookies.UserId;
   
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   useEffect(() => {
     const pawsUserDetails = JSON.parse(localStorage.getItem("pawsUserDetails"));
