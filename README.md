@@ -5,8 +5,12 @@ A fully-feautred platform for Dating or finding Playmates for your Pets.
 Match up with local pets and pet lovers for friendship, play-dates or fun
 outdoor playing.
 ```
-This is still a work in progress. 
-Responsiveness aspect of this application is still incomplete.
+Currently working on Client and Server side Code 
+for Editing user's profile feature of this application.
+
+In case you find any bugs you can report it to me.
+Pull requests are always welcome. For major changes, 
+please open an issue first to discuss what you would like to change.
 ```
 ### Few Screenshots
 
@@ -17,6 +21,10 @@ Responsiveness aspect of this application is still incomplete.
 ![Dashboard](/screenshots/6.png "Dashboard")
 
 <hr>
+
+### Hosted/Deployed
+
+https://paws-mern-dating.herokuapp.com/
 
 ### Tech Stack
 
@@ -58,3 +66,59 @@ Responsiveness aspect of this application is still incomplete.
  <li> All the conversation are stored. matches and onformation in the database i.e. <i>persistant</i>
  
 </ul>
+
+
+## Usage
+
+**Test users**
+
+| Email | Password  |
+| -------- | --------- |
+| test12@test.com | test |
+| duke@test.com | testtest |
+
+``` Or Use the guest user login feature.  ```
+
+### Clone the repository:
+```
+git clone https://github.com/SiddharthSsb11/mern-project-paws.git
+```
+
+### Env Variables
+
+Create a .env file in the root and add the following
+
+```
+NODE_ENV = development
+PORT = 5000
+MONGO_URI = <yourMongoDbUri>
+```
+
+### Install Dependencies (frontend & backend)
+
+```
+npm install
+cd frontend
+npm install
+```
+
+### Run
+Run frontend (:3000) & backend (:5000)
+```
+# Run frontend only
+cd frontend
+npm start 
+
+# Run backend only
+npm start
+```
+
+## Build & Deploy
+
+```
+# Create frontend production build
+cd frontend
+npm run build
+```
+
+There is a Heroku postbuild script, so if you push to Heroku, no need to build manually for deployment to Heroku
