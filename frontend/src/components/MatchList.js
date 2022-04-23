@@ -86,17 +86,19 @@ const MatchList = ({ matches, /* finalMatchedUsers */ }) => {
     >
       {filteredMatchedProfiles?.map((matchedProfile) => (
         <ListItem
+          onClick={() => setSelectedMatch(matchedProfile)}
           key={matchedProfile.user_id} //matchedProfile.user_id
           d="flex"
           alignItems="center"
           justifyContent="space-between"
           borderRadius="7px"
           border="1.5px solid black"
-          bg="yellow.300"
+          bg={selectedMatch === matchedProfile ? "yellow.500" : "yellow.300"}
           width="100%"
           p={1.5}
+          
           //cursor="pointer"
-          _hover={{ background: "yellow.400" }}
+          //_hover={{ background: "yellow.400" }}
         >
           <Box
             d="flex"
