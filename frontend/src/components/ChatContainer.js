@@ -269,12 +269,12 @@ const ChatContainer = () => {
                   <Box
                     d="flex"
                     alignItems="center"
-                    //justifyContent="space-between"
-                    //flexDir={{ base: "column", md: "row" }}
+                    justifyContent="center"
+                    flexDir={{ base: "column", sm: "row" }}
                     bg="yellow.400"
-                    gap="1rem"
+                    gap={{base:"1.4rem", sm:"1rem"}}
                     px={2.5}
-                    height="12rem"
+                    height={{base:"24rem", sm:"12rem"}}
                     borderRadius="10px"
                     border="1px solid black"
                   >

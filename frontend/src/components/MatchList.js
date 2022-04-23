@@ -86,7 +86,7 @@ const MatchList = ({ matches, /* finalMatchedUsers */ }) => {
     >
       {filteredMatchedProfiles?.map((matchedProfile) => (
         <ListItem
-          onClick={() => setSelectedMatch(matchedProfile)}
+          //onClick={() => setSelectedMatch(matchedProfile)}
           key={matchedProfile.user_id} //matchedProfile.user_id
           d="flex"
           alignItems="center"
