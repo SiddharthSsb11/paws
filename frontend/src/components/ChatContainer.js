@@ -116,6 +116,7 @@ const ChatContainer = () => {
     formattedMessage['img'] = user?.url;
     formattedMessage['message'] = message.message;
     formattedMessage['timestamp'] = message.timestamp
+    formattedMessage['id'] = message._id;
     messages.push(formattedMessage);
   });
 
@@ -125,6 +126,7 @@ const ChatContainer = () => {
     formattedMessage['img'] = selectedMatch?.url;
     formattedMessage['message'] = message.message;
     formattedMessage['timestamp'] = message.timestamp;
+    formattedMessage['id'] = message._id
     messages.push(formattedMessage);  
   });
 

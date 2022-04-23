@@ -44,7 +44,7 @@ const OnBoardingPage = () => {
   const [gender, setGender] = useState("female");
   const [matches, setMatches] = useState([]);
 
-  const [setCookie] = useCookies(['user']);
+  const [setCookies] = useCookies(['user']);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -117,9 +117,9 @@ const OnBoardingPage = () => {
 
       localStorage.setItem("pawsUserDetails", JSON.stringify( response.data.userDetails));
 
-      setCookie('Email', response.data.email);
-      setCookie('UserId', response.data.userId);
-      setCookie('AuthToken', response.data.token);
+      //setCookie('Email', response.data.email);
+      //setCookie('UserId', response.data.userId);
+      //setCookie('AuthToken', response.data.token);
       //setCookie('UserDetails', response.data.userDetails);
 
       

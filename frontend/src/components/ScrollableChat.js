@@ -18,7 +18,7 @@ const ScrollableChat = ({ messages }) => {
       <ScrollableFeed>
         {messages &&
           messages.map((message, i) => (
-            <div style={{ display: "flex", color:"white", fontWeight:"bold" }} key={message.name}/*message.timestamp*/ >
+            <div style={{ display: "flex", color:"white", fontWeight:"bold" }} key={message.id}/*message.timestamp*/ >
               {(isSameSender(messages, message, i, user) ||
                 isLastMessage(messages, i, user)) && (
                 <Tooltip label={message.name} placement="bottom-start" hasArrow>

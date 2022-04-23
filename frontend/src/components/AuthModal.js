@@ -220,8 +220,8 @@ const AuthModal = ({ children, overlay }) => {
                   as={Button}
                   bg="white"
                   onClick={() => {
-                    setEmail("guest@test.com");
-                    setPassword("guesttest");
+                    setEmail("duke@test.com");
+                    setPassword("testtest");
                   }}
                   p={2.5}
                   size="lg"

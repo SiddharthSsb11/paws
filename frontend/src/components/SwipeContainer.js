@@ -169,7 +169,7 @@ const SwipeContainer = ({prefUsers}) => {
                     {prefUser.name}, &nbsp;{2022 - prefUser.year}, &nbsp;
                     {prefUser.genderShow ? (
                       <span>
-                        {prefUser.gender === "Male" ? (
+                        {prefUser.gender === "male" ? (
                           <Icon
                             mb={-0.5}
                             fontWeight="bold"

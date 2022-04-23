@@ -13,8 +13,8 @@ Responsiveness aspect of this application is still incomplete.
 ![Home](/screenshots/1.png "Home")
 ![Gallery](/screenshots/2.png "Gallery")
 ![Register](/screenshots/3.png "Register")
-![Dashboard](/screenshots/4.png "Dashboard")
 ![Dashboard](/screenshots/5.png "Dashboard")
+![Dashboard](/screenshots/6.png "Dashboard")
 
 <hr>
 
