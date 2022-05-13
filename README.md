@@ -27,7 +27,7 @@ please open an issue first to discuss what you would like to change.
 https://paws-mern-dating.herokuapp.com/
 
 
-### Few Screenshots
+### Demo Video
 
 https://www.loom.com/share/35d07a7c96ed4aa5954b99a05142eada
 
